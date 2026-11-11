@@ -241,3 +241,6 @@
   for (const [k, [n, d]] of Object.entries(S)) if (J.STYLES[k]) { J.STYLES[k].name = n; J.STYLES[k].desc = d; }
   if (J.MOODS.horror) J.MOODS.horror.name = "Horror";
 })();
+
+// Upstream extra2 definitions carry their own English labels.
+for (const g of J.GROUP_KEYS) for (const d of Object.values(J.registry(g))) if (d.x2 && d.en) d.name = d.en;

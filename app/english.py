@@ -1,6 +1,8 @@
 """English copy for the browser edition. The Japanese source stays authoritative."""
 
 BODY = {
+    '追加分2の演出も使う': 'Include extra parts 2',
+    '本家v0.13.0の追加855部品。「文字だけ」をオフにすると全件を選べます': '855 new parts from upstream v0.13.0. Turn off Text only to access every part.',
     'title="上の演出ピッチを全体に適用。ロックした字幕は維持">演出ピッチ</button>': 'title="Apply the motion pitch above to every unlocked cue">Motion pitch</button>',
     '<button value="cancel" class="ghost">やめる</button>': '<button value="cancel" class="ghost">Cancel</button>',
     'title="現在のプロジェクトを初期化します。共通ライブラリは残します">プロジェクト初期化</button>': 'title="Reset the current project and keep shared libraries">Reset project</button>',
@@ -177,6 +179,11 @@ BODY = {
 }
 
 UI = {
+    "'追加分2の演出：使う'": "'Extra parts 2: on'",
+    "'追加分2の演出：使わない'": "'Extra parts 2: off'",
+    "'追加分2'": "'Extra parts 2'",
+    "'追2'": "'Ex2'",
+    '（追加分2がオフのため、自動では選ばれません）': '(Extra parts 2 is off; excluded from random picks)',
     "'文字PV系の部品：使う'": "'Typographic parts: on'",
     "'文字PV系の部品：使わない（おまかせ・シャッフルで選ばれません）'": "'Typographic parts: off (not picked by Randomize or Shuffle)'",
     "'キネティックの部品：使う'": "'Kinetic parts: on'",
