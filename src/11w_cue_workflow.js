@@ -65,6 +65,7 @@ const savedLookContext = context => {
 J.localLookContext = (p, audio) => JSON.stringify(canonical(normalizeLookContext([
   ...['style','mood','seed','fx','enabled','fonts','colors','extra','wa','horror','typo','kinetic','lang','unify','typeset','centerDir','centerFree','aspect','fps'].map(k => p[k]),
   p.timing?.bpm, p.timing?.offset, p.timing?.snap, p.timing?.lineScale, audio?.duration, audio?.beats,
+  ...(p.extra2 === true ? ['extra2', true] : []),
   ...(J.normalizeMotionPitch(p.motionPitch) === 1 ? [] : [J.normalizeMotionPitch(p.motionPitch)]),
 ])));
 const cueKey = (text, start, end, part, ov) => JSON.stringify([text, start, end, part, ov]);
@@ -102,7 +103,7 @@ J.cueRerollModes = [
   ['random', 'ランダム', 'Random'],
 ];
 J.cueRerollKey = mode => mode === 'global' ? '9' : mode === 'random' ? '0' : String(J.cueRerollModes.findIndex(m => m[0] === mode) + 1);
-const ruleKeys = ['style', 'mood', 'fonts', 'colors', 'fx', 'enabled', 'extra', 'wa', 'horror', 'typo', 'kinetic', 'lookTheme'];
+const ruleKeys = ['style', 'mood', 'fonts', 'colors', 'fx', 'enabled', 'extra', 'wa', 'horror', 'typo', 'kinetic', 'extra2', 'lookTheme'];
 const ruleFrom = p => Object.fromEntries(ruleKeys.map(k => [k, clone(p[k] ?? null)]));
 J.cueAppearanceRule = (p, style) => ({ ...ruleFrom(p), palette: clone(style.schemes), palettes: [], unifyMode: 'local' });
 const globalKeys = [...ruleKeys, 'seed', 'unify', 'typeset'];

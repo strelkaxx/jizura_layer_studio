@@ -63,7 +63,7 @@ J.appliedThemeName = (value, project) => {
   return t ? J.layerText(t.name, t.en) : project?.themeSnapshots?.[key]?.name || '';
 };
 J.userThemeFor = (project, value = project.theme) => J.normalizeUserTheme(project.userThemes?.find(t => t.id === value));
-J.themeDrawSwitches = draw => Object.fromEntries(['extra', 'wa', 'horror', 'typo', 'kinetic'].filter(k => draw[k] === true).map(k => [k, true]));
+J.themeDrawSwitches = draw => Object.fromEntries(['extra', 'wa', 'horror', 'typo', 'kinetic', 'extra2'].filter(k => draw[k] === true).map(k => [k, true]));
 J.moodStyleCandidates = (project, mood, themePart = () => false) => {
   const M = J.MOODS[mood] || J.MOODS.chaos;
   const allowed = J.STYLE_ORDER.filter(k => {

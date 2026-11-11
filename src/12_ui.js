@@ -249,10 +249,11 @@ function mergeProject(p) {
   J.mergeUserThemeLibrary?.(o);
   return o;
 }
-const SET_UI = { horror: { name: 'ホラー', badge: 'ホ' }, typo: { name: '文字PV系', badge: '文' }, kinetic: { name: 'キネティック', badge: 'キ' } };
+const SET_UI = { horror: { name: 'ホラー', badge: 'ホ' }, typo: { name: '文字PV系', badge: '文' }, kinetic: { name: 'キネティック', badge: 'キ' }, extra2: { name: '追加分2', badge: '追2' } };
 function setBadges(d) {
   return (d && d.extra ? '<span class="set-badge ex" title="最初の公開版のあとに追加">追加</span>' : '') + (d && d.wa ? '<span class="set-badge" title="和風の演出">和</span>' : '')
-    + (d && d.set && SET_UI[d.set] ? `<span class="set-badge set-${d.set}" title="${SET_UI[d.set].name}">${SET_UI[d.set].badge}</span>` : '');
+    + (d && d.set && SET_UI[d.set] ? `<span class="set-badge set-${d.set}" title="${SET_UI[d.set].name}">${SET_UI[d.set].badge}</span>` : '')
+    + (d && d.x2 && d.set !== 'extra2' ? `<span class="set-badge set-extra2" title="追加分2">追2</span>` : '');
 }
 function loadLocal() { try { const s = localStorage.getItem(LS_KEY); if (s) return mergeProject(JSON.parse(s)); } catch (e) {} return mergeProject(null); }
 function showProjectLoadNotice() {
@@ -940,7 +941,7 @@ function editLine(li, ln) {
 /* ---------------- 編集の取り消し（Ctrl+Z） ---------------- */
 // Global look changes and cue edits must share chronological undo. Otherwise
 // old per-cue snapshots can undo a later global palette/font change piecemeal.
-const HKEYS = ['style', 'mood', 'seed', 'fx', 'enabled', 'fonts', 'colors', 'overrides', 'locks', 'localLooks', 'globalLook', 'theme', 'lookTheme', 'extra', 'wa', 'horror', 'typo', 'kinetic', 'motionRecipeVersion', 'motionPitch', 'motionPitchSetting', 'cuePitchSetting', 'lang', 'unify', 'typeset'];
+const HKEYS = ['style', 'mood', 'seed', 'fx', 'enabled', 'fonts', 'colors', 'overrides', 'locks', 'localLooks', 'globalLook', 'theme', 'lookTheme', 'extra', 'wa', 'horror', 'typo', 'kinetic', 'extra2', 'motionRecipeVersion', 'motionPitch', 'motionPitchSetting', 'cuePitchSetting', 'lang', 'unify', 'typeset'];
 const ED = { undo: [], redo: [] };
 const edSnap = () => JSON.stringify({ look: Object.fromEntries(HKEYS.filter(k => k !== 'localLooks' && k !== 'overrides').map(k => [k, S.project[k] ?? null])), lyrics: S.project.lyrics, subtitleCues: S.project.subtitleCues || null, fillerSettings: S.project.fillerSettings, localLooks: S.project.localLooks || null, lineTimes: S.project.timing.lineTimes || {}, ov: S.project.overrides, range: S.project.exportRange || null });
 function pushEdit() { const s = edSnap(); if (ED.undo[ED.undo.length - 1] !== s) ED.undo.push(s); if (ED.undo.length > 60) ED.undo.shift(); ED.redo = []; updateEditBtns(); }
@@ -1540,7 +1541,7 @@ function renderTech() {
       const l = document.createElement('label');
       l.className = 'tcard';
       l.title = k + (tbl[k].tags && tbl[k].tags.length ? '（' + tbl[k].tags.map(t => (J.MOODS[t] ? J.MOODS[t].name : t)).join('・') + '）' : '');
-      if (!J.randomOk(S.project, g, k)) { l.classList.add('set-off'); l.title += tbl[k].extra && S.project.extra !== true ? '（追加分がオフのため、自動では選ばれません）' : tbl[k].set && !J.setOn(S.project, tbl[k].set) ? '（このセットがオフのため、自動では選ばれません）' : '（和風の演出がオフのため、自動では選ばれません）'; }
+      if (!J.randomOk(S.project, g, k)) { l.classList.add('set-off'); l.title += tbl[k].extra && S.project.extra !== true ? '（追加分がオフのため、自動では選ばれません）' : tbl[k].set && !J.setOn(S.project, tbl[k].set) ? '（このセットがオフのため、自動では選ばれません）' : tbl[k].x2 && !J.setOn(S.project, 'extra2') ? '（追加分2がオフのため、自動では選ばれません）' : '（和風の演出がオフのため、自動では選ばれません）'; }
       l.innerHTML = `<canvas width="${tw}" height="${th}" data-g="${g}" data-k="${k}"></canvas><span class="tcard-name"><input type="checkbox" ${en[k] !== false ? 'checked' : ''}> <span>${escapeHtml(tbl[k].name)}</span>${setBadges(tbl[k])}</span>`;
       const cv = l.querySelector('canvas');
       l.querySelector('input').addEventListener('change', e => { en[k] = e.target.checked; S.project.mood = null; d.querySelector('.tg-cnt').textContent = `${items.filter(x => en[x] !== false).length}/${items.length}`; replanSoon(60); });
@@ -1842,6 +1843,7 @@ function bind() {
   setSwitch('wa-toggle', 'wa', true, '和風の演出：使う', '和風の演出：使わない（おまかせ・シャッフルで選ばれません）');
   setSwitch('typo-toggle', 'typo', true, '文字PV系の部品：使う', '文字PV系の部品：使わない（おまかせ・シャッフルで選ばれません）');
   setSwitch('kinetic-toggle', 'kinetic', true, 'キネティックの部品：使う', 'キネティックの部品：使わない（おまかせ・シャッフルで選ばれません）');
+  setSwitch('extra2-toggle', 'extra2', true, '追加分2の演出：使う', '追加分2の演出：使わない');
   setSwitch('horror-toggle', 'horror', true, 'ホラーの演出：使う（おまかせの雰囲気に「ホラー」が加わります）', 'ホラーの演出：使わない');
   setSwitch('unify-toggle', 'unify', true, '統一感：オン（パートごとにそろえ、キメ・モーフ・太さも使います）', '統一感：オフ');
   setSwitch('typeset-toggle', 'typeset', true, '文字整列：オン（字間・助詞・英字・0.2秒先・効果控えめ）', '文字整列：オフ');
