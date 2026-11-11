@@ -1,3 +1,7 @@
+## 1.5.2-mcp.2 — 2026-11-12
+
+- Import all 855 extra2 parts (26 packs) from 852wa/JIZURA v0.13.0, commit 4c8278cef161b38b132055e7b5efa112a5d41790. Add native extra2 switches, badges, JSON/history/cue-rule persistence and MCP catalog metadata. Preserve Layer Studio compositing, MCP, favorites and the reversible clean typography policy. Extra2 defaults off as upstream; turn off clean typography to access all stock parts. This imports browser parts; Layer Studio does not ship an After Effects panel.
+
 ## 1.5.2-mcp.1 — 2026-11-12 (strelkaxx fork)
 
 - Add a local stdio MCP adapter for cityedge Layer Studio: SRT, project/media imports, subtitle/cut editing, reproducible generation, PNG/audio previews and native MP4/front export.

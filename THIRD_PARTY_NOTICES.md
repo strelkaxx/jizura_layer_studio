@@ -96,3 +96,8 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+
+## 852wa/JIZURA v0.13.0 extra2 parts
+
+All 855 extra2 browser parts (26 src/11p_x2_*.js packs) and extra2 registration in src/11q_sets.js are imported from https://github.com/852wa/JIZURA/tree/4c8278cef161b38b132055e7b5efa112a5d41790 . Copyright (c) 2026 hakoniwa, MIT; see LICENSE. The Layer Studio integration is maintained by this fork.
