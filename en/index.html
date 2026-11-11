@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>JIZURA Layer Studio — cityedge fork</title>
+<title>JIZURA Layer Studio — strelkaxx fork</title>
 <meta name="description" content="Create subtitle front and binary or grayscale matte MP4 pairs. An unofficial JIZURA derivative with SRT import, preview backgrounds and spectrum compositing.">
 <link rel="canonical" href="https://cityedge.github.io/jizura_layer_studio/en/">
 <meta property="og:url" content="https://cityedge.github.io/jizura_layer_studio/en/">
 <link rel="alternate" hreflang="ja" href="https://cityedge.github.io/jizura_layer_studio/">
 <link rel="alternate" hreflang="en" href="https://cityedge.github.io/jizura_layer_studio/en/">
 <meta property="og:type" content="website">
-<meta property="og:title" content="JIZURA Layer Studio — cityedge fork">
+<meta property="og:title" content="JIZURA Layer Studio — strelkaxx fork">
 <meta property="og:description" content="Create subtitle front and binary or grayscale matte MP4 pairs. An unofficial JIZURA derivative with SRT import, preview backgrounds and spectrum compositing.">
 <meta name="twitter:card" content="summary">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -649,6 +649,14 @@ dialog.motion-library { box-sizing: border-box; width: min(980px, calc(100vw - 2
 #app.is-mobile .transport { flex-wrap: wrap; }
 #app.is-mobile #btnMotionLibrary { flex: 0 0 100%; }
 
+/* Agent favorites share their project data with the local MCP integration. */
+.agent-font-control { display:grid; gap:6px; margin-bottom:14px; }
+.agent-favorites-dialog { width:min(720px,94vw); max-height:90vh; overflow:auto; color:var(--fg,#eee); background:var(--panel,#202024); border:1px solid #555; border-radius:12px; padding:20px; }
+.agent-favorites-dialog::backdrop { background:#0009; }
+.agent-favorites-dialog select,.agent-favorites-dialog input { width:100%; margin:6px 0; }
+.agent-favorite-actions { display:flex; gap:8px; flex-wrap:wrap; margin:12px 0; }
+.agent-favorite-preview { width:100%; height:auto; background:#000; }
+
 </style>
 </head>
 <body>
@@ -663,7 +671,7 @@ dialog.motion-library { box-sizing: border-box; width: min(980px, calc(100vw - 2
 </div>
 <div id="app">
   <header class="bar">
-    <div class="brand"><span class="mark" aria-hidden="true">字面</span><span class="word">JIZURA Layer Studio</span><span class="tag">cityedge fork</span><span class="ver">v1.5.2</span></div>
+    <div class="brand"><span class="mark" aria-hidden="true">字面</span><span class="word">JIZURA Layer Studio</span><span class="tag">strelkaxx fork</span><span class="ver">v1.5.2-mcp.1</span></div>
     <div class="proj">
       <input id="songTitle" type="text" placeholder="Song title (shown on title cards and HUD)" aria-label="Song title">
       <input id="songArtist" type="text" placeholder="Artist" aria-label="Artist">
@@ -945,8 +953,8 @@ dialog.motion-library { box-sizing: border-box; width: min(980px, calc(100vw - 2
 <dialog id="termsDlg" class="terms publication-dialog" aria-labelledby="termsTitle">
   <form method="dialog">
     <h2 id="termsTitle" tabindex="-1">About / rights</h2>
-    <div class="terms-main"><p class="terms-big">JIZURA Layer Studio</p><p>cityedge fork · v1.5.2</p></div>
-    <p>This is an unofficial derivative of JIZURA by hakoniwa, adapted by cityedge for subtitle layer production. The original author does not maintain this edition.</p>
+    <div class="terms-main"><p class="terms-big">JIZURA Layer Studio</p><p>cityedge fork · v1.5.2-mcp.1</p></div>
+    <p>This fork adds local MCP, favorite effects and a common lyric font to the cityedge edition, maintained by strelkaxx. This is an unofficial derivative of JIZURA by hakoniwa, adapted by cityedge for subtitle layer production. The original author does not maintain this edition.</p>
     <p><a href="https://github.com/852wa/JIZURA" target="_blank" rel="noopener">Original JIZURA — hakoniwa</a></p>
     <p>You do not need to place this app’s MIT license notice in exported videos. Check the rights and terms of the lyrics, music, images, videos, fonts and other material you use.</p>
     <p class="muted terms-note">Selected media is processed in your browser and is not uploaded by the app. Settings and subtitles are autosaved in browser storage. Font loading connects to Google Fonts. Media files are not embedded in project JSON.</p>
@@ -1043,6 +1051,35 @@ JIZURA Layer Studio is based on JIZURA v0.9.0 by hakoniwa:
 https://github.com/852wa/JIZURA
 The original MIT copyright and license are preserved in `LICENSE`, with a separate notice for cityedge&#x27;s modifications.
 This edition provides Japanese and English interfaces. Other interface translations are not distributed.
+
+
+## hirazisora/JIZURA agent integration
+
+Source: https://github.com/hirazisora/JIZURA/tree/5874988dfcbaf93d15e355701841e954b51e9225
+
+The bounded drawing interpreter and custom lyric component registration are adapted in src/11za_agent_drawing.js and src/11zb_agent_components.js. The local MCP runtime is adapted from mcp/runtime.mjs. Other integration files target cityedge Layer Studio.
+
+MIT License
+
+Copyright (c) 2026 hakoniwa
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the &quot;Software&quot;), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 </pre></details>
     <details class="terms-oss"><summary>Mediabunny · MPL-2.0</summary><p><a href="https://registry.npmjs.org/mediabunny/-/mediabunny-1.60.0.tgz">Source code of the bundled version (1.60.0)</a></p><pre class="license-text">Mozilla Public License Version 2.0
 ==================================
@@ -1427,7 +1464,7 @@ Exhibit B - &quot;Incompatible With Secondary Licenses&quot; Notice
   <form method="dialog">
     <h2 id="guideTitle" tabindex="-1">JIZURA Layer Studio user guide</h2>
     <p>Create animated lyrics and export a finished video with background/audio, or front/matte layers for a video editor.</p>
-    <p><a class="full-manual" href="user_guide.en.md" target="_blank" rel="noopener">v1.5.2 Full user manual (Markdown)</a> covers individual settings, compositing and saved data in detail.</p>
+    <p><a class="full-manual" href="user_guide.en.md" target="_blank" rel="noopener">v1.5.2-mcp.1 Full user manual (Markdown)</a> covers individual settings, compositing and saved data in detail.</p>
     <h3>Make your first video</h3>
     <ol class="guide-steps">
       <li><strong>Load lyrics and media</strong><p>Import a UTF-8 SRT, audio and a preview background (image/video). You can also type lyrics without SRT. To resume a project, open its JSON and reload only the media. Reimporting SRT replaces restored cues, fillers and local effects.</p></li>
@@ -1495,7 +1532,7 @@ Exhibit B - &quot;Incompatible With Secondary Licenses&quot; Notice
     <p><strong>Reset project</strong> clears current lyrics, fillers, parts, effects, locks, loaded media, spectrum/opacity/export/title settings, playhead and histories. Temporary export links are removed and autosave becomes the blank project. This cannot be undone after confirmation.</p>
     <p><strong>Shared libraries are kept.</strong> User themes and other cross-project data, interface language, display mode and preview volume remain. Original media, saved JSON and exported files on your PC are not deleted. Delete shared items in their own management screens.</p>
     <p>About / rights is at the bottom of the right pane, with license and material-handling information.</p>
-    <div class="terms-foot"><span class="muted">cityedge fork · v1.5.2</span><button value="close" class="primary" autofocus>Close</button></div>
+    <div class="terms-foot"><span class="muted">cityedge fork · v1.5.2-mcp.1</span><button value="close" class="primary" autofocus>Close</button></div>
   </form>
 </dialog>
 
@@ -4516,7 +4553,7 @@ J.plan = (project, audio) => {
   const zoneOf = () => (zones ? Object.assign({}, zones[0]) : null);
   if (zones && en.bg) en.bg.bigChar = false;               // the one background that draws the lyric itself (big, centred)
   const plan = {
-    version: 1, generator: 'JIZURA', appVersion: '1.5.2', title, artist, W, H, fps: project.fps || 30,
+    version: 1, generator: 'JIZURA', appVersion: '1.5.2-mcp.1', title, artist, W, H, fps: project.fps || 30,
     duration: tm.duration, styleKey: project.style, style: st, fx, seed: project.seed,
     lines: [], cuts: [], events: [], beats: audio && audio.beats ? audio.beats.slice() : [],
     hud: fx.hud === 'on' ? true : fx.hud === 'off' ? false : !!st.hud,
@@ -39247,6 +39284,447 @@ J.prepareCueReroll = (p, current, index, audio, mode = 'fine') => mode === 'pitc
   : reroll(p, current, index, audio, mode);
 })();
 
+/* Adapted from hirazisora/JIZURA (MIT), 5874988dfcbaf93d15e355701841e954b51e9225. See THIRD_PARTY_NOTICES.md. */
+/* Portable drawing programs: deterministic Canvas2D commands, never executable JS. */
+(() => {
+'use strict';
+const colors=['fg','bg','accent','accent2','sub','ink','dim'];
+const types=['rect','ellipse','line','text','arcText','source'];
+const numeric=['x','y','w','h','ox','oy','rotation','scale','opacity','lineWidth','size','arc','contrast','bounce'];
+// frame: what x/y/w/h are fractions of — the display area, or (decor) the lyric's resting text box, or one axis of it.
+// units:"short" measures w/h in the frame's shorter edge, so circles stay round in any aspect ratio.
+const frames=['area','text','textX','textY'],unitModes=['frame','short'];
+const allowed=new Set(['type',...numeric,'fill','stroke','text','font','frame','units']);
+J.drawingSpec={version:1,mode:['replace','overlay'],nodes:types,colors,coordinates:'Normalized to the target display area / fitted material. Rotation in degrees. Text centered; size is fraction of the shorter edge.',frames:{frame:frames,units:unitModes,ox:'offset added after frame placement, in shorter-edge units',notes:'frame text/textX/textY (decor only) follow the resting lyric text box, so decorations track font size and area changes; other targets fall back to the area. units short keeps w/h proportional (aspect-safe shapes). size, lineWidth and bounce use the frame shorter edge.'},numericFields:numeric,numericValue:'A finite number, or {from,to,ease:"linear"|"in"|"out"|"inOut"}, or {value,amplitude,cycles,phase}. Numbers and animation endpoints may use {param:"amount",default:1}, optionally scaled by mul ({param:"size",default:1,mul:0.4} = size × 0.4). Animation progress spans the cut (0..1); sine phase in radians.',text:['$text','$note','literal string'],limits:{nodes:64,bytes:32768},example:{version:1,mode:'replace',nodes:[{type:'rect',x:.1,y:.35,w:.8,h:.3,fill:'accent',scale:{from:.8,to:1,ease:'out'}},{type:'text',text:'$text',x:.5,y:.5,size:.12,fill:'fg',rotation:{value:0,amplitude:3,cycles:1}}]}};
+J.validateDrawing=program=>{
+  const fail=message=>{throw Error('Drawing program: '+message);};
+  if(!program||program.version!==1||!['replace','overlay'].includes(program.mode)||!Array.isArray(program.nodes)||program.nodes.length>64||JSON.stringify(program).length>32768)fail('invalid version, mode or node limit');
+  for(const key of Object.keys(program))if(!['version','mode','nodes'].includes(key))fail('unknown field '+key);
+  function number(v){
+    if(typeof v==='number'){if(!Number.isFinite(v)||Math.abs(v)>10000)fail('number out of range');return;}
+    if(!v||typeof v!=='object'||Array.isArray(v))fail('invalid numeric value');
+    if('param' in v){if(typeof v.param!=='string'||!/^[a-zA-Z][a-zA-Z0-9_]{0,40}$/.test(v.param)||Object.keys(v).some(k=>!['param','default','mul'].includes(k))||v.default!==undefined&&!Number.isFinite(v.default)||v.mul!==undefined&&(!Number.isFinite(v.mul)||Math.abs(v.mul)>10000))fail('invalid parameter reference');return;}
+    const lerp='from' in v,keys=lerp?['from','to','ease']:['value','amplitude','cycles','phase'];
+    const scalar=n=>Number.isFinite(n)||n&&typeof n==='object'&&'param' in n;
+    for(const [key,n] of Object.entries(v)){if(!keys.includes(key))fail('unknown animation field '+key);if(key==='ease'){if(!['linear','in','out','inOut'].includes(n))fail('invalid ease');}else{if(!scalar(n))fail('invalid animation number');number(n);}}
+    if(lerp&&(!scalar(v.from)||!scalar(v.to))||!lerp&&!scalar(v.value))fail('missing animation endpoints');
+  }
+  for(const node of program.nodes){
+    if(!node||!types.includes(node.type))fail('invalid node type');
+    for(const [key,v] of Object.entries(node)){
+      if(!allowed.has(key))fail('unknown node field '+key);
+      if(numeric.includes(key))number(v);
+      if(['fill','stroke'].includes(key)&&!colors.includes(v)&&!/^#[0-9a-f]{6}([0-9a-f]{2})?$/i.test(v))fail('invalid color');
+      if(key==='text'&&(typeof v!=='string'||v.length>4000))fail('invalid text');
+      if(key==='font'&&(typeof v!=='string'||!v.length||v.length>200))fail('invalid font key');
+      if(key==='frame'&&!frames.includes(v))fail('invalid frame');
+      if(key==='units'&&!unitModes.includes(v))fail('invalid units');
+    }
+  }
+  return JSON.parse(JSON.stringify(program));
+};
+const checked=new WeakSet();
+J.drawingValue=(v,p=0,params={},fallback=0)=>{
+  if(v===undefined)return fallback;if(typeof v==='number')return v;
+  // {param,default,mul}: the parameter (or its default) times mul, so one size parameter can scale a whole shape
+  if('param' in v){const n=Number.isFinite(params[v.param])?params[v.param]:(v.default??fallback);return v.mul===undefined?n:n*v.mul;}
+  const scalar=(n,f)=>J.drawingValue(n,p,params,f);
+  if('from' in v){let t=J.clamp(p);if(v.ease==='in')t*=t;else if(v.ease==='out')t=1-(1-t)**2;else if(v.ease==='inOut')t=t*t*(3-2*t);const from=scalar(v.from,0);return from+(scalar(v.to,0)-from)*t;}
+  return scalar(v.value,0)+scalar(v.amplitude,0)*Math.sin(p*scalar(v.cycles,1)*Math.PI*2+scalar(v.phase,0));
+};
+J.drawProgram=(ctx,program,{W,H,p=0,text='',note='',source=null,sc={},font=null,uniformFont=null,params={},drawText=null,box=null})=>{
+  if(!checked.has(program)){J.validateDrawing(program);checked.add(program);}
+  const value=(v,fallback)=>J.drawingValue(v,p,params,fallback);
+  const color=c=>sc[c]||c||sc.fg||'#ffffff';
+  const area={x0:0,y0:0,x1:W,y1:H},tbox=box&&box.x1>box.x0&&box.y1>box.y0?box:null;
+  // Layout programs report the box of the text they drew (in program coordinates) for decor and treatments.
+  const base=drawText&&ctx.getTransform?ctx.getTransform().inverse():null;let drawn=null;
+  const track=r=>{if(!base||!r||!(r.x1>r.x0))return;const m=base.multiply(ctx.getTransform());
+    for(const [px,py] of [[r.x0,r.y0],[r.x1,r.y0],[r.x0,r.y1],[r.x1,r.y1]]){const q=m.transformPoint({x:px,y:py});drawn=drawn?{x0:Math.min(drawn.x0,q.x),y0:Math.min(drawn.y0,q.y),x1:Math.max(drawn.x1,q.x),y1:Math.max(drawn.y1,q.y)}:{x0:q.x,y0:q.y,x1:q.x,y1:q.y};}};
+  for(const node of program.nodes){
+    ctx.save();try{
+      const f=node.frame&&node.frame!=='area'&&tbox?node.frame:'area';
+      const fx=f==='text'||f==='textX'?tbox:area,fy=f==='text'||f==='textY'?tbox:area;
+      const fw=fx.x1-fx.x0,fh=fy.y1-fy.y0,u=Math.max(1,Math.min(fw,fh)),short=node.units==='short';
+      const x=fx.x0+value(node.x,.5)*fw+value(node.ox,0)*u,y=fy.y0+value(node.y,.5)*fh+value(node.oy,0)*u;
+      const w=value(node.w,.5)*(short?u:fw),h=value(node.h,.5)*(short?u:fh);
+      ctx.translate(x,y);ctx.rotate(value(node.rotation,0)*Math.PI/180);const scale=value(node.scale,1);ctx.scale(scale,scale);ctx.globalAlpha*=J.clamp(value(node.opacity,1));
+      ctx.fillStyle=color(node.fill);ctx.strokeStyle=color(node.stroke);ctx.lineWidth=Math.max(.01,value(node.lineWidth,.005)*u);
+      if(node.type==='arcText'){
+        const str=node.text==='$note'?note:node.text==='$text'||node.text===undefined?text:node.text;
+        const chars=typeof Intl.Segmenter==='function'?[...new Intl.Segmenter(undefined,{granularity:'grapheme'}).segment(str)].map(s=>s.segment):[...str];
+        const arc=J.clamp(value(node.arc,140),1,300)*Math.PI/180,rx=Math.abs(w)/2,ry=Math.abs(h)/2;
+        const step=arc/Math.max(1,chars.length),base=Math.min(Math.abs(value(node.size,.15)*u),Math.min(rx,ry)*step*.82),contrast=J.clamp(value(node.contrast,.3),0,.6);
+        const f=J.FONTS[uniformFont||node.font||font];ctx.textAlign='center';ctx.textBaseline='middle';ctx.lineJoin='round';
+        chars.forEach((ch,i)=>{const angle=-Math.PI/2+(i-(chars.length-1)/2)*step;
+          const pulse=Math.sin(p*Math.PI*6-i*.7)*value(node.bounce,.035)*u;
+          const size=Math.max(1,base*(i%2===0?1+contrast:1-contrast));
+          ctx.save();ctx.translate(Math.cos(angle)*(rx+pulse),Math.sin(angle)*(ry+pulse));ctx.rotate(angle+Math.PI/2);
+          ctx.font=`${f?.weight||900} ${size}px ${f?.family||'sans-serif'}`;
+          if(drawText)track(drawText({text:ch,font:uniformFont||node.font||font,size,color:color(node.fill),mi:i}));
+          else{if(node.stroke)ctx.strokeText(ch,0,0);ctx.fillText(ch,0,0);}ctx.restore();
+        });
+      }else if(node.type==='text'){
+        const str=node.text==='$note'?note:node.text==='$text'||node.text===undefined?text:node.text;
+        const size=Math.max(1,Math.abs(value(node.size,.12)*u)),f=J.FONTS[uniformFont||node.font||font];
+        ctx.font=`${f?.weight||600} ${size}px ${f?.family||'sans-serif'}`;ctx.textAlign='center';ctx.textBaseline='middle';
+        // Fit uniformly, never squeeze the glyph aspect ratio.
+        const fit=Math.min(1,Math.abs(w)/Math.max(1,ctx.measureText(str).width));ctx.scale(fit,fit);
+        if(drawText)track(drawText({text:str,font:uniformFont||node.font||font,size,color:color(node.fill),mi:0}));else ctx.fillText(str,0,0);
+      }else if(node.type==='source'){if(source){const sw=source.videoWidth||source.naturalWidth||source.width,sh=source.videoHeight||source.naturalHeight||source.height;if(sw&&sh){const fit=Math.min(Math.abs(w)/sw,Math.abs(h)/sh);ctx.drawImage(source,-sw*fit/2,-sh*fit/2,sw*fit,sh*fit);}}}
+      else{ctx.beginPath();if(node.type==='rect')ctx.rect(0,0,w,h);else if(node.type==='ellipse')ctx.ellipse(0,0,Math.abs(w)/2,Math.abs(h)/2,0,0,Math.PI*2);else{ctx.moveTo(0,0);ctx.lineTo(w,h);}if(node.type!=='line'&&node.fill)ctx.fill();if(node.stroke||node.type==='line')ctx.stroke();}
+    }finally{ctx.restore();}
+  }
+  return drawn;
+};
+const drawCut=J.Renderer.prototype.drawCut;
+J.Renderer.prototype.drawCut=function(env){
+  const program=env.cut.drawing;if(!program)return drawCut.call(this,env);
+  if(program.mode==='overlay')drawCut.call(this,env);
+  const sc=env.passColor?Object.fromEntries(colors.map(c=>[c,env.passColor])):env.sc;
+  J.drawProgram(env.ctx,program,{W:env.W,H:env.H,p:J.clamp(env.lt/Math.max(.01,env.cut.end-env.cut.start)),text:env.cut.effectsOnly?'':env.cut.text,note:env.cut.note||'',sc,font:env.st.fonts.display?.[0],uniformFont:env.st.agentUniformFont});
+};
+})();
+
+/* Adapted from hirazisora/JIZURA (MIT), 5874988dfcbaf93d15e355701841e954b51e9225. See THIRD_PARTY_NOTICES.md. */
+/* Project-owned effect components. Portable JSON, composed through stock pipelines. */
+(() => {
+'use strict';
+const clone=x=>JSON.parse(JSON.stringify(x)),mediaGroups=[];
+const groups=J.GROUP_KEYS.filter(g=>g!=='fx'),fallback={layout:'center',enter:'cut',hold:'still',exit:'cut',treat:'none',bg:'none',cam:'push',trans:'wipe'};
+const registry=g=>mediaGroups.includes(g)?J.MEDIA_TECH:J.registry(g);
+const motionKeys=['x','y','rotation','scale','sx','sy','opacity'];
+let signature='',active=[];
+J.customEffectSpec={format:'jizura-effect-components',version:1,groups,id:'custom_ followed by letters, numbers or underscores (max 80)',
+  fields:['version','id','group','name','nameEn','tags','themes','base','params','labels','motion','program','layer'],
+  params:'Standard JSON parameter defaults (numbers, booleans, strings, arrays, objects). program/motion may reference a numeric {param:"amount",default:1}, scaled by an optional mul ({param:"size",default:1,mul:.4}) so one parameter can resize a multi-part shape; labels maps parameter keys to {ja,en}.',
+  targets:'Layer Studio lyric groups. Background media tracks belong to the host application.',
+  base:'Existing stock ID in the same group. Reuse stock effects/parameters first; author only missing components. Custom IDs cannot be bases.',
+  motion:{groups:['enter','hold','exit','treat','cam',...mediaGroups],fields:motionKeys,coordinates:'x/y fractions of target width/height; rotation degrees; scale/sx/sy/opacity multipliers',progress:'enter/exit: phase progress, hold: cut progress'},
+  program:{groups:['layout','decor','bg','fx','trans',...mediaGroups],spec:J.drawingSpec,notes:'Layout text uses stock enter/hold/exit and treatment. Decor layer front/back. Media programs overlay the stock material. trans/fx keep stock rendering; programs add to it.'},
+  workflow:['Read catalog and theme candidates','Use stock IDs for existing effects','Define only missing elements in their proper group','Validate/import components','Combine stock and custom IDs in a standard favorite payload','Preview entrance/hold/exit and refine','Save project or export favorites (definitions included)'],
+  example:{version:1,id:'custom_pop_dots',group:'decor',name:'ポップのドット',nameEn:'Pop dots',tags:['pop'],layer:'front',params:{radius:.08},labels:{radius:{ja:'円の半径',en:'Circle radius'}},program:{version:1,mode:'overlay',nodes:[{type:'ellipse',x:.15,y:.2,w:{param:'radius'},h:{param:'radius'},fill:'accent',scale:{from:0,to:1,ease:'out'}}]}}};
+J.validateCustomEffects=value=>{
+  const fail=m=>{throw Error('Custom effects: '+m);};
+  if(!Array.isArray(value)||value.length>128||JSON.stringify(value).length>2097152)fail('invalid list or size');
+  const list=JSON.parse(JSON.stringify(value),(key,v)=>{if(['__proto__','prototype','constructor'].includes(key))fail('unsafe key');return v;}),ids=new Set();
+  for(const d of list){
+    if(!d||d.version!==1||!groups.includes(d.group)||typeof d.id!=='string'||!/^custom_[A-Za-z0-9_]{1,73}$/.test(d.id)||ids.has(d.id))fail('invalid version, group or duplicate ID');ids.add(d.id);
+    if(Object.keys(d).some(k=>!J.customEffectSpec.fields.includes(k)))fail('unknown field');
+    if(typeof d.name!=='string'||!d.name.trim()||d.name.length>200||d.nameEn!==undefined&&(typeof d.nameEn!=='string'||d.nameEn.length>200))fail('invalid name');
+    for(const [key,table] of [['tags',J.MOODS],['themes',J.THEMES]])if(d[key]!==undefined&&(!Array.isArray(d[key])||d[key].some(k=>typeof k!=='string'||!Object.hasOwn(table,k))))fail('invalid '+key);
+    if(!d.tags?.length&&!d.themes?.length)fail('tags or themes required for theme filtering');
+    if(d.base!==undefined){const b=registry(d.group)[d.base];if(typeof d.base!=='string'||!Object.hasOwn(registry(d.group),d.base)||!b||b.custom||d.base.startsWith('custom_')||mediaGroups.includes(d.group)&&(d.group==='media'?!!b.stage:b.stage!==(d.group==='mediaEnter'?'enter':'exit')))fail('invalid stock base: '+d.group+'/'+d.base);}
+    function parameter(v,depth=0){if(depth>4)return false;if(typeof v==='number')return Number.isFinite(v)&&Math.abs(v)<=10000;if(typeof v==='boolean')return true;if(typeof v==='string')return v.length<=2000;if(Array.isArray(v))return v.length<=64&&v.every(x=>parameter(x,depth+1));return !!v&&typeof v==='object'&&Object.keys(v).length<=40&&Object.entries(v).every(([k,x])=>/^[A-Za-z][A-Za-z0-9_]{0,40}$/.test(k)&&parameter(x,depth+1));}
+    if(d.params!==undefined&&(!d.params||Array.isArray(d.params)||typeof d.params!=='object'||!parameter(d.params)))fail('invalid params');
+    if(d.labels!==undefined&&(!d.labels||Array.isArray(d.labels)||Object.entries(d.labels).some(([k,v])=>!Object.hasOwn(d.params||{},k)||!v||Object.keys(v).some(k=>!['ja','en'].includes(k))||Object.values(v).some(s=>typeof s!=='string'||s.length>120))))fail('invalid labels');
+    if(d.layer!==undefined&&(d.group!=='decor'||!['front','back'].includes(d.layer)))fail('invalid decoration layer');
+    if(d.motion){if(!J.customEffectSpec.motion.groups.includes(d.group)||typeof d.motion!=='object'||Array.isArray(d.motion)||Object.keys(d.motion).some(k=>!motionKeys.includes(k)))fail('motion not supported by this group');for(const v of Object.values(d.motion))J.validateDrawing({version:1,mode:'overlay',nodes:[{type:'rect',x:v}]});}
+    if(d.program){if(!J.customEffectSpec.program.groups.includes(d.group))fail('program not supported by this group');d.program=J.validateDrawing(d.program);if([...mediaGroups,'fx','trans'].includes(d.group)&&d.program.mode!=='overlay')fail('this group uses overlay programs');}
+    if(d.group==='cam'&&d.motion?.opacity!==undefined)fail('camera opacity is not supported; use cut opacity');
+    if(mediaGroups.includes(d.group)&&!d.base)fail('media requires a stock recipe base');
+    if(['trans','fx'].includes(d.group)&&!d.base)fail('trans/fx require a stock base');
+    if(!d.base&&!d.program&&!d.motion)fail('component must define base, program or motion');
+  }
+  return list;
+};
+function tracks(d,p,params,W,H){const v=(k,f)=>J.drawingValue(d.motion?.[k],p,params,f);return {x:v('x',0)*W,y:v('y',0)*H,rotation:v('rotation',0)*Math.PI/180,scale:v('scale',1),sx:v('sx',1),sy:v('sy',1),alpha:J.clamp(v('opacity',1))};}
+// The lyric's text box at rest (after its entrance), measured once per cut and size by running the layout
+// under an empty clip. Decorations in frame text/textX/textY follow it on both layers, so they keep their
+// place when the font size, the text or the display area changes, without riding the entrance animation.
+const restBoxes=new WeakMap();
+J.restTextBox=env=>{
+  const cut=env.cut;if(!cut||cut.effectsOnly||!cut.text)return null;
+  let sizes=restBoxes.get(cut);if(!sizes)restBoxes.set(cut,sizes=new Map());
+  const key=Math.round(env.W)+'x'+Math.round(env.H);if(sizes.has(key))return sizes.get(key);
+  const L=J.LAYOUTS[cut.layout]||J.LAYOUTS.center,ctx=env.ctx,saved={lt:env.lt,ltb:env.ltb,pIn:env.pIn,pOut:env.pOut};
+  const rest=Math.max(0,Math.min(cut.dur-(cut.outDur||0)-.01,Math.max((cut.inDur||0)+.35,cut.dur*.4)));
+  let bb=null;sizes.set(key,null);   // guards re-entry from layouts that draw decor themselves
+  ctx.save();
+  try{ctx.beginPath();ctx.rect(0,0,0,0);ctx.clip();Object.assign(env,{lt:rest,ltb:rest,pIn:J.clamp(rest/Math.max(.01,cut.inDur)),pOut:0});bb=L.render(env);}
+  catch(e){bb=null;}finally{ctx.restore();Object.assign(env,saved);}
+  const box=bb&&bb.x1>bb.x0&&bb.y1>bb.y0?{x0:bb.x0,y0:bb.y0,x1:bb.x1,y1:bb.y1}:null;
+  sizes.set(key,box);return box;
+};
+const usesText=program=>program.nodes.some(n=>n.frame&&n.frame!=='area');
+function paint(d,env,params,source=null,progress=null,layout=false){
+  if(!d.program)return null;
+  const box=!layout&&usesText(d.program)?J.restTextBox(env):null;
+  return J.drawProgram(env.ctx,d.program,{W:env.W,H:env.H,box,p:progress??J.clamp(env.lt/Math.max(.01,env.cut.dur)),text:env.cut.text||'',note:env.cut.note||'',sc:env.sc,source,params,font:params.font||env.st?.fonts?.display?.[0],uniformFont:env.st?.agentUniformFont,
+    drawText:layout?it=>J.mainDraw(env,{...it,x:0,y:0,rot:0,track:0,lead:1.2}):null});
+}
+function install(d){
+  const g=d.group,b=registry(g)[d.base??fallback[g]],defaults=d.params||{};
+  if(mediaGroups.includes(g)){
+    const stage=g==='mediaEnter'?'enter':g==='mediaExit'?'exit':null;
+    J.MEDIA_TECH[d.id]={...b,name:J.layerText(d.name,d.nameEn||d.name),custom:true,customDefinition:d,...(stage?{group:stage,stage,motion:d.id,[stage]:d.id}:{})};return;
+  }
+  const def={...(b||{}),name:J.layerText(d.name,d.nameEn||d.name),custom:true,customDefinition:d,tags:d.tags||[],w:b?.w??1};
+  delete def.extra;delete def.set;delete def.wa;delete def.special;
+  if(['layout','bg','treat','cam','trans'].includes(g))def.plan=(...a)=>{const seed=a[0]?.state?.(),p={...(!d.program||d.program.mode==='overlay'?b?.plan?.(...a):{}),...defaults};if(g==='layout')p._motionPlan={version:1,layout:d.id,seed,fontRoles:clone(a[2].fonts)};return p;};
+  if(['enter','hold','exit','treat'].includes(g))def.apply=(env,it,p,context)=>{
+    const params={...defaults,...env.cut[g+'P']};
+    b?.apply?.(env,it,g==='treat'?{...params,...p}:p,context);
+    const progress=g==='hold'||g==='treat'?J.clamp(env.lt/Math.max(.01,env.cut.dur)):p;
+    const v=tracks(d,progress,params,env.W,env.H);
+    it.x+=v.x;it.y+=v.y;it.rot=(it.rot||0)+v.rotation/J.DEG;it.sx=(it.sx??1)*v.scale*v.sx;it.sy=(it.sy??1)*v.scale*v.sy;it.alpha=(it.alpha??1)*v.alpha;
+  };
+  if(g==='layout')def.fits=b?.fits||(()=>true);
+  if(g==='layout')def.render=env=>{
+    const params={...defaults,...env.cut.params};let bb;
+    if(!d.program||d.program.mode==='overlay')bb=b?.render?.(env);
+    const drawn=paint(d,env,params,null,null,true);
+    if(!bb&&drawn)bb={...drawn,cx:(drawn.x0+drawn.x1)/2,cy:(drawn.y0+drawn.y1)/2,boxes:[]};
+    return bb||{x0:0,y0:0,x1:env.W,y1:env.H,cx:env.W/2,cy:env.H/2};
+  };
+  if(g==='decor'){def.layer=d.layer||b?.layer||'front';def.detailFields=[...new Set([...(b&&(!d.program||d.program.mode==='overlay')?(J.decorDetailFields?.(d.base)||[]):[]),...Object.keys(defaults)])];def.draw=(env,bb,P)=>{const params={...defaults,...P};if(!d.program||d.program.mode==='overlay')b?.draw?.(env,bb,params);paint(d,env,params);};}
+  if(g==='bg')def.draw=(env,P)=>{const params={...defaults,...P};if(!d.program||d.program.mode==='overlay')b?.draw?.(env,params);paint(d,env,params);};
+  if(g==='cam')def.get=env=>{const params={...defaults,...env.cut.camP},v=tracks(d,J.clamp(env.lt/Math.max(.01,env.cut.dur)),params,env.W,env.H),base=b?.get?.(env,params)||{};return {...base,x:(base.x||0)+v.x,y:(base.y||0)+v.y,rot:(base.rot||0)+v.rotation/J.DEG,s:(base.s??1)*v.scale,sx:(base.sx??1)*v.sx,sy:(base.sy??1)*v.sy};};
+  if(g==='trans')def.draw=(ctx,A,B,p,I)=>{b.draw(ctx,A,B,p,I);if(d.program){ctx.save();try{ctx.globalAlpha*=Math.sin(Math.PI*J.clamp(p));J.drawProgram(ctx,d.program,{W:ctx.canvas.width,H:ctx.canvas.height,p,source:B,params:{...defaults,...I.P}});}finally{ctx.restore();}}};
+  if(g==='fx'){
+    def.customBase=d.base;
+    if(d.program)def.draw=(ctx,ev,p,I)=>{b?.draw?.(ctx,ev,p,I);ctx.save();try{J.drawProgram(ctx,d.program,{W:I.cw,H:I.ch,p,sc:I.sc,params:{...defaults,...ev.params}});}finally{ctx.restore();}};
+  }
+  J.register(g,d.id,def,'custom');
+}
+J.activateCustomEffects=project=>{
+  const value=project?.customEffects||[],next=JSON.stringify(value);if(next===signature)return;
+  const list=J.validateCustomEffects(value);
+  for(const d of active){delete registry(d.group)[d.id];if(!mediaGroups.includes(d.group)){const order=J.order(d.group),i=order.indexOf(d.id);if(i>=0)order.splice(i,1);}}
+  for(const d of list)install(d);active=list;signature=next;
+};
+J.withCustomEffects=(list,fn)=>{const old=clone(active);J.activateCustomEffects({customEffects:list});try{return fn();}finally{J.activateCustomEffects({customEffects:old});}};
+const canonical=v=>JSON.stringify(v&&typeof v==='object'?(Array.isArray(v)?v.map(x=>JSON.parse(canonical(x))):Object.fromEntries(Object.keys(v).sort().map(k=>[k,JSON.parse(canonical(v[k]))]))):v);
+J.combineCustomEffects=(...lists)=>{
+  const merged=[];
+  for(const list of lists)for(const d of J.validateCustomEffects(list)){const same=merged.find(x=>x.id===d.id);if(same&&canonical(same)!==canonical(d))throw Error('Custom effect ID conflict: '+d.id);if(!same)merged.push(d);}
+  return J.validateCustomEffects(merged);
+};
+J.importCustomEffects=(project,value)=>{
+  const list=J.validateCustomEffects(value),merged=J.combineCustomEffects(project.customEffects||[],list);
+  project.customEffects=J.validateCustomEffects(merged);J.activateCustomEffects(project);
+  const themes=project.theme&&J.THEMES[project.theme]?[project.theme]:[],matches=d=>!themes.length||themes.some(key=>d.themes?.includes(key)||(d.tags||[]).some(t=>J.THEMES[key].moods.includes(t)));
+  for(const d of list){if(mediaGroups.includes(d.group)){for(const layer of ['foreground','media']){const settings=project[layer].effects ||= {};settings.enabled ||= {};settings.enabled[d.id]??=matches(d);}}else{project.enabled ||= {};project.enabled[d.group] ||= {};project.enabled[d.group][d.id]??=matches(d);}}
+  return clone(list);
+};
+J.customEffectDependencies=value=>{const ids=new Set();const visit=v=>{if(typeof v==='string')ids.add(v);else if(v&&typeof v==='object')Object.values(v).forEach(visit);};visit(value);return clone(active.filter(d=>ids.has(d.id)));};
+const plan=J.plan;
+J.plan=(project,...args)=>{J.activateCustomEffects(project);const out=plan(project,...args);out.customEffects=clone(active);return out;};
+const omakase=J.omakase;
+J.omakase=(project,...args)=>{J.activateCustomEffects(project);return omakase(project,...args);};
+})();
+
+/* Layer Studio agent favorites: portable JSON and ordinary editor projects. */
+(() => {
+'use strict';
+const clone = x => JSON.parse(JSON.stringify(x));
+const own = (o,k) => !!o && Object.hasOwn(o,k);
+J.agentJSON = (value, max = 2097152) => {
+  const raw = JSON.stringify(value);
+  if (!raw || raw.length > max) throw Error('JSON exceeds the supported size');
+  const visit = (x, depth = 0) => {
+    if (depth > 24) throw Error('JSON nesting is too deep');
+    if (typeof x === 'number' && !Number.isFinite(x)) throw Error('Non-finite number');
+    if (x && typeof x === 'object') for (const [k,v] of Object.entries(x)) {
+      if (['__proto__','prototype','constructor'].includes(k)) throw Error('Unsafe JSON key');
+      visit(v,depth+1);
+    }
+  };
+  visit(value); return clone(value);
+};
+const detailKeys = ['layout','enter','hold','exit','treat','bg','cam','trans','params','enterP','holdP','exitP','treatP','bgP','camP','transP','decor','drawing'];
+J.agentFavoriteSpec = {
+  format:'jizura-cut-effects',version:1,kinds:['lyrics'],detailKeys,
+  portableFormat:'jizura-layer-favorites', portableExtension:'.jizura-layer-favorites.json',
+  notes:['Lyrics only: Layer Studio has a single background asset, not ONE STOP EDITION media tracks.',
+    'The JSON payload supports stock lyric slots and custom components. Binary .jizuraichifav containers are not supported.',
+    'Use motion_* for a whole subtitle recipe. favorite_* captures or authors the appearance of one generated cut.'],
+  example:{format:'jizura-cut-effects',version:1,kind:'lyrics',native:{},details:{layout:'center',enter:'pop',hold:'still',exit:'shrink',decor:[]}},
+};
+J.validateAgentFavorite = payload => {
+  const p = J.agentJSON(payload);
+  if (p.format !== 'jizura-cut-effects' || p.version !== 1 || p.kind !== 'lyrics') throw Error('Expected lyric jizura-cut-effects version 1');
+  if (p.native && Object.keys(p.native).length) throw Error('Native media fields are not supported');
+  if (Object.keys(p).some(k=>!['format','version','kind','native','details','components','fonts'].includes(k))) throw Error('Unknown favorite field');
+  if (!p.details || Array.isArray(p.details) || typeof p.details !== 'object') throw Error('Favorite details required');
+  if (Object.keys(p.details).some(k=>!detailKeys.includes(k))) throw Error('Unsupported detail field');
+  const components = J.validateCustomEffects(p.components || []);
+  J.withCustomEffects(components, () => {
+    for (const [g,k] of Object.entries(p.details)) {
+      if (J.GROUP_KEYS.includes(g) && g !== 'decor' && !(g==='trans' && (k===null||k==='none')) && (typeof k !== 'string' || !own(J.registry(g),k))) throw Error('Unknown '+g+' ID: '+k);
+      if (/P$/.test(g) || g==='params') if (!k || Array.isArray(k) || typeof k !== 'object') throw Error('Parameters must be objects');
+    }
+    if (p.details.decor && (!Array.isArray(p.details.decor) || p.details.decor.length>16 || p.details.decor.some(d=>!d||!own(J.DECOR,d.id)))) throw Error('Invalid decoration');
+  });
+  if (p.details.drawing) p.details.drawing = J.validateDrawing(p.details.drawing);
+  if (p.fonts && (Array.isArray(p.fonts)||typeof p.fonts!=='object'||Object.entries(p.fonts).some(([r,k])=>!['display','serif','body','mono'].includes(r)||!own(J.FONTS,k)))) throw Error('Invalid font role');
+  p.native = {}; p.components = components;
+  return p;
+};
+const cueKey = (project,line) => project.subtitleCues?.[line]?.id || 'line-'+line;
+J.agentCutTarget = (plan,index) => {
+  if (!Number.isInteger(index)||index<0) throw Error('Invalid cut index');
+  const cut=plan.cuts[index];
+  if (!cut || cut.line<0 || cut.utext==null) throw Error('Lyric cut not found');
+  return {cut,slot:plan.cuts.filter(c=>c.line===cut.line&&c.utext!=null).indexOf(cut)};
+};
+J.captureAgentFavorite = (project,plan,index) => {
+  const {cut}=J.agentCutTarget(plan,index), details={};
+  for (const k of detailKeys) if (cut[k]!==undefined) details[k]=clone(cut[k]);
+  delete details.params?._motionPlan;
+  const style=cut.renderLook?.style||plan.style;
+  return J.validateAgentFavorite({format:'jizura-cut-effects',version:1,kind:'lyrics',native:{},details,
+    components:J.customEffectDependencies(details),fonts:Object.fromEntries(Object.entries(style.fonts).map(([r,a])=>[r,a[0]]))});
+};
+J.applyAgentFavorite = (project,plan,index,payload) => {
+  const valid=J.validateAgentFavorite(payload),{cut,slot}=J.agentCutTarget(plan,index);
+  if (project.overrides?.[cut.line]?.lock) throw Error('Unlock this subtitle before applying effects');
+  const next=clone(project);
+  J.importCustomEffects(next,valid.components);
+  next.agentEffects ||= {}; const key=cueKey(next,cut.line);
+  next.agentEffects[key] ||= {}; next.agentEffects[key][slot]=valid;
+  return next;
+};
+const resolveStyle=J.resolveStyle;
+J.resolveStyle=project=>{const st=resolveStyle(project),font=project.agentUniformFont;if(font&&own(J.FONTS,font)){st.agentUniformFont=font;for(const role of Object.keys(st.fonts))st.fonts[role]=[font];}return st;};
+const originalPlan=J.plan;
+J.plan=(project,...args)=>{
+  const result=originalPlan(project,...args), seen=new WeakSet();
+  function apply(plan,lineMap=null) {
+    if (!plan || seen.has(plan)) return; seen.add(plan);
+    const counts=new Map();
+    for (const cut of plan.cuts || []) {
+      if (cut.line<0||cut.utext==null) continue;
+      const slot=counts.get(cut.line)||0;counts.set(cut.line,slot+1);
+      const raw=project.agentEffects?.[cueKey(project,lineMap?lineMap[cut.line]:cut.line)]?.[slot];
+      if (!raw) continue;
+      const {details,fonts}=J.validateAgentFavorite(raw);
+      if (details.layout && details.layout!==cut.layout) {
+        cut.layout=details.layout;
+        cut.params=J.LAYOUTS[cut.layout].plan(J.rng(cut.seed),{text:cut.text,n:J.glyphCount(cut.text),W:cut.zone?.w||plan.W,H:cut.zone?.h||plan.H,dur:cut.dur},cut.renderLook?.style||plan.style);
+      }
+      for (const [k,v] of Object.entries(details)) {
+        if (k==='params' && !details.layout) cut.params={...cut.params,...clone(v)};
+        else cut[k]=clone(v);
+      }
+      if (cut.trans==='none') cut.trans=null;
+      delete cut.morph;delete cut.weightGrow;
+      if (fonts) {
+        cut.renderLook=clone(cut.renderLook||{style:plan.style,styleKey:plan.styleKey,fx:plan.fx,hud:plan.hud});
+        for (const [role,key] of Object.entries(fonts)) cut.renderLook.style.fonts[role]=[key];
+      }
+      if (cut.companion && typeof cut.companion==='object') {
+        const other=cut.companion;
+        for (const k of detailKeys.filter(k=>k!=='params')) if (cut[k]!==undefined) other[k]=clone(cut[k]);
+        other.params=J.LAYOUTS[other.layout].plan(J.rng(other.seed),{text:other.text,n:J.glyphCount(other.text),W:other.zone.w,H:other.zone.h,dur:other.dur},cut.renderLook?.style||plan.style);
+      }
+    }
+    for(const group of plan.layerGroups||[])apply(group.plan,group.indices.map(i=>lineMap?lineMap[i]:i));
+  }
+  apply(result);
+  if (project.agentUniformFont && own(J.FONTS,project.agentUniformFont)) {
+    const font=project.agentUniformFont, roles={display:font,serif:font,body:font};
+    const unify=p=>{const fallback={style:clone(p.style),styleKey:p.styleKey,fx:p.fx,hud:p.hud};for(const role of Object.keys(p.style.fonts))p.style.fonts[role]=[font];
+      for(const c of p.cuts||[]){J.retargetCutFonts(c,roles,fallback);c.renderLook.style.agentUniformFont=font;delete c.weightGrow;if(c.companion&&typeof c.companion==='object')J.retargetCutFonts(c.companion,roles,fallback);}
+      for(const group of p.layerGroups||[])unify(group.plan);};unify(result);
+  }
+  return result;
+};
+const favorites=project=>project.effectFavorites||[];
+J.agentFavorites = {
+  spec:()=>({...J.agentFavoriteSpec,drawing:J.drawingSpec,components:J.customEffectSpec}),
+  list:project=>clone(favorites(project)),
+  save(project,{name,payload,id,plan,index}) {
+    const valid=payload?J.validateAgentFavorite(payload):J.captureAgentFavorite(project,plan,index);
+    if(typeof name!=='string'||!name.trim()||name.length>200)throw Error('Favorite name must contain 1–200 characters');
+    const list=clone(favorites(project));if(list.length>=256&&!id)throw Error('Favorite limit reached');
+    const pos=id?list.findIndex(f=>f.id===id):-1;if(id&&pos<0)throw Error('Favorite not found');
+    const entry={id:id||'fav-'+(globalThis.crypto?.randomUUID?.()||Date.now().toString(36)+Math.random().toString(36).slice(2)),name:name.trim(),payload:valid};
+    J.importCustomEffects(project,valid.components);
+    if(pos<0)list.push(entry);else list[pos]=entry;project.effectFavorites=list;return clone(entry);
+  },
+  remove(project,id){const list=favorites(project);if(!list.some(f=>f.id===id))throw Error('Favorite not found');project.effectFavorites=list.filter(f=>f.id!==id);},
+  apply(project,plan,index,id){const f=favorites(project).find(f=>f.id===id);if(!f)throw Error('Favorite not found');return J.applyAgentFavorite(project,plan,index,f.payload);},
+  export(project){return {format:'jizura-layer-favorites',version:1,favorites:this.list(project),customEffects:clone(project.customEffects||[]),userFonts:clone(project.userFonts||[])};},
+  import(project,data,mode='append'){
+    const file=J.agentJSON(data);if(file.format!=='jizura-layer-favorites'||file.version!==1||!Array.isArray(file.favorites)||file.favorites.length>256)throw Error('Expected Layer Studio favorites JSON');
+    if(!['append','replace'].includes(mode))throw Error('Invalid import mode');
+    const next=clone(project), fonts=new Map((next.userFonts||[]).map(f=>[f.key,f]));
+    if(file.userFonts!==undefined&&(!Array.isArray(file.userFonts)||file.userFonts.length>128))throw Error('Invalid installed font references');
+    for(const raw of file.userFonts||[]){
+      if(!raw||!J.SAFE_FONT_KEY.test(raw.key)||typeof raw.family!=='string'||!J.safeFamily(raw.family))throw Error('Invalid installed font reference');
+      const f={key:raw.key,label:String(raw.label||raw.key).slice(0,80),family:J.safeFamily(raw.family),weight:J.clamp(parseInt(raw.weight,10)||400,100,900)};
+      if(fonts.has(f.key)&&JSON.stringify(fonts.get(f.key))!==JSON.stringify(f))throw Error('Installed font ID conflict');fonts.set(f.key,f);
+    }
+    next.userFonts=[...fonts.values()];
+    try {
+      J.registerProjectFonts(next.userFonts);
+      const ids=new Set();const list=file.favorites.map(f=>{if(!f||typeof f.id!=='string'||!f.id||ids.has(f.id)||typeof f.name!=='string'||!f.name.trim()||f.name.length>200)throw Error('Invalid favorite entry');ids.add(f.id);return {...f,payload:J.validateAgentFavorite(f.payload)};});
+      if(mode==='replace')next.effectFavorites=[];
+      J.importCustomEffects(next,J.combineCustomEffects(file.customEffects||[],...list.map(f=>f.payload.components)));
+      for(const f of list){const old=favorites(next).find(x=>x.id===f.id);if(old&&JSON.stringify(old)!==JSON.stringify(f))f.id='fav-'+(globalThis.crypto?.randomUUID?.()||Date.now()+Math.random());if(!old||old.id!==f.id)(next.effectFavorites||=[]).push(f);}
+      if(favorites(next).length>256)throw Error('Favorite limit reached');
+    } finally { J.registerProjectFonts(project.userFonts); J.activateCustomEffects(project); }
+    return next;
+  },
+  async preview({project,payload,id,index,time=1,width=640}) {
+    if(!Number.isFinite(time)||time<0||!Number.isInteger(width)||width<160||width>1920)throw Error('Invalid preview time/width');
+    const selected=payload||favorites(project).find(f=>f.id===id)?.payload;if(!selected)throw Error('Favorite not found');
+    const valid=J.validateAgentFavorite(selected),p=project?clone(project):J.defaultProject();
+    try {
+      if(index===undefined){p.subtitleCues=[{id:'sample',start:0,end:3,text:'動く歌詞'}];p.lyrics='動く歌詞';p.overrides={0:{cuts:1}};p.localLooks=null;p.agentEffects={};index=0;}
+      J.importCustomEffects(p,valid.components);let plan=J.plan(p);const original=J.agentCutTarget(plan,index).cut;
+      if(time>=original.dur)throw Error('time must be less than cut duration');
+      const next=J.applyAgentFavorite(p,plan,index,valid);plan=J.plan(next);const cut=plan.cuts[index];
+      await J.ensureFonts(next.lyrics,J.fontsOfPlan(plan));
+      const height=Math.round(width*plan.H/plan.W),renderer=new J.LayerRenderer(width,height,next.layerMode,next.layerBackgroundOpacity,next.hideDecorativeText);
+      renderer.draw(plan,cut.start+time,true);
+      return {data:renderer.layer.toDataURL('image/png').split(',')[1],width,height,time,duration:cut.dur};
+    }finally{J.activateCustomEffects(project||J.ui?.project||{});}
+  },
+};
+})();
+
+/* Opt-in engine policy; the fork UI enables it for new projects. Source picks are retained. */
+(() => {
+'use strict';
+const lists={layout:'center huge vcols knSlamStack knCollide knReflow tyJustify tyScaleSteps tyLineFocus',
+enter:'cut pop zoom slideL slideR riseMask dropMask knWordSlam knPushIn knInertia',exit:'cut shrink slideOutL slideOutR sinkMask riseOut knPushOut',
+hold:'still breathe knWordPulse knGapBreath',decor:'',bg:'none',treat:'none outline knWordScale',cam:'push',fx:'',trans:'pushSlide'};
+const sets=Object.fromEntries(Object.entries(lists).map(([g,s])=>[g,new Set(s.split(/\s+/).filter(Boolean))]));
+J.agentTypographyAllowed=(g,k)=>!sets[g]||sets[g].has(k)||!!J.registry(g)?.[k]?.custom;
+const randomOk=J.randomOk;
+J.randomOk=(p,g,k)=>!(p.agentCleanTypography&&sets[g]&&!J.agentTypographyAllowed(g,k))&&randomOk(p,g,k);
+const omakase=J.omakase;
+J.omakase=(p,...args)=>{const next=omakase(p,...args);if(p.agentCleanTypography)next.enabled=Object.fromEntries(J.GROUP_KEYS.map(g=>[g,Object.fromEntries(J.order(g).map(k=>[k,J.agentTypographyAllowed(g,k)&&p.enabled?.[g]?.[k]!==false]))]));return next;};
+const plan=J.plan;
+J.plan=(project,...args)=>{
+  const out=plan(project,...args);if(!project.agentCleanTypography)return out;
+  function clean(p){
+    p.agentCleanTypography=true;
+    Object.assign(p.fx,{decor:0,texture:0,chroma:0,glitch:0,flash:false,hud:'off'});p.hud=false;p.events=[];
+    const cutClean=c=>{
+      if(c.renderLook){c.renderLook=JSON.parse(JSON.stringify(c.renderLook));Object.assign(c.renderLook.fx,{decor:0,texture:0,chroma:0,glitch:0,flash:false,hud:'off'});c.renderLook.hud=false;}
+      if(!J.agentTypographyAllowed('layout',c.layout)){
+        c.layout='center';c.params=J.LAYOUTS.center.plan(J.rng(c.seed),{text:c.text,n:J.glyphCount(c.text),W:c.zone?.w||p.W,H:c.zone?.h||p.H,dur:c.dur},c.renderLook?.style||p.style);
+      }
+      for(const [g,k] of [['enter','cut'],['exit','cut'],['hold','still'],['treat','none'],['bg','none'],['cam','push']])if(!J.agentTypographyAllowed(g,c[g])){c[g]=k;if(g==='treat')c.treatP={};}
+      c.decor=(c.decor||[]).filter(d=>J.DECOR[d.id]?.custom);if(!J.BG[c.bg]?.custom){c.bg='none';c.bgP={};}delete c.morph;delete c.weightGrow;
+      if(c.trans&&!J.agentTypographyAllowed('trans',c.trans)){c.trans=null;c.transDur=0;c.transP={};}
+      if(c.layout==='center')c.params={...c.params,sub:false,under:false,sx:1};
+      if(c.layout==='huge')c.params={...c.params,label:false};
+      if(c.layout==='vcols')c.params={...c.params,variant:'split'};
+      if(c.companion&&typeof c.companion==='object')cutClean(c.companion);
+    };
+    (p.cuts||[]).forEach(cutClean);for(const g of p.layerGroups||[])clean(g.plan);
+  }
+  clean(out);return out;
+};
+// Remove optional guide/plate graphics from stock text layouts. Authored custom components keep their design.
+const drawCut=J.Renderer.prototype.drawCut;
+J.Renderer.prototype.drawCut=function(env){if(env.plan.agentCleanTypography&&!J.LAYOUTS[env.cut.layout]?.custom&&!env.cut.drawing&&!(env.cut.decor||[]).some(d=>J.DECOR[d.id]?.custom)){const saved={};for(const k of ['line','polyPartial','circle','arc','rrect','rect','poly','blob']){saved[k]=env[k];env[k]=()=>{};}try{return drawCut.call(this,env);}finally{Object.assign(env,saved);}}return drawCut.call(this,env);};
+})();
+
 /* English labels are applied after all expression packs register, before the editor starts.
    Internal IDs and project JSON remain language independent. */
 (() => {
@@ -39707,6 +40185,8 @@ function initVolume() {
 function mergeProject(p) {
   const d = J.defaultProject();
   const o = Object.assign(d, p || {});
+  if(o.agentCleanTypography===undefined)o.agentCleanTypography=true;
+  if(o.agentUniformFont===undefined)o.agentUniformFont='gothic_bold';
   if (o.subtitleCues) o.subtitleCues = J.validateCues(o.subtitleCues);
   o.fx = Object.assign(J.defaultProject().fx, (p && p.fx) || {});
   J.upgradeLayerProject(o, p);
@@ -40309,7 +40789,7 @@ function fillCutPick() {
 function renderLines() {
   const ol = $('lineList'); ol.innerHTML = ''; S.lineEls = []; S.curLine = -2;
   const ov = S.project.overrides, R = exportRangeLines();
-  const layoutOpts = '<option value="">Auto</option>' + J.LAYOUT_ORDER.map(k => `<option value="${k}">${J.LAYOUTS[k].name}</option>`).join('');
+  const layoutOpts = '<option value="">Auto</option>' + J.LAYOUT_ORDER.filter(k=>!S.project.agentCleanTypography||J.agentTypographyAllowed('layout',k)).map(k => `<option value="${k}">${J.LAYOUTS[k].name}</option>`).join('');
   // Hundreds of menus otherwise duplicate the complete layout catalogue on every replan.
   const lazyLay = (sel, value) => {
     sel.innerHTML = '<option value="">Auto</option>' + (value && J.LAYOUTS[value] ? `<option value="${value}">${J.LAYOUTS[value].name}</option>` : '');
@@ -40915,7 +41395,7 @@ function renderFx() {
 /* ---------------- technique tab ---------------- */
 const GROUPS = [['layout', 'Layout'], ['enter', 'Entrance'], ['hold', 'Hold'], ['exit', 'Exit'], ['decor', 'Decoration'], ['treat', 'Text treatments'], ['bg', 'Background'], ['cam', 'Camera'], ['fx', 'Screen effects'], ['trans', 'Transitions']];
 const openGroups = new Set();
-function techItems(g) { return J.order(g).filter(k => J.registry(g)[k] && !J.registry(g)[k].special); }
+function techItems(g) { return J.order(g).filter(k => J.registry(g)[k] && !J.registry(g)[k].special && (!S.project.agentCleanTypography || J.agentTypographyAllowed(g,k))); }
 
 const previewR = new J.Renderer();
 const previewPlans = new Map();
@@ -41414,7 +41894,7 @@ function bind() {
   };
   document.querySelectorAll('.terms-open').forEach(b => b.addEventListener('click', openTerms));
   dlg.addEventListener('click', e => { if (e.target === dlg) dlg.close ? dlg.close() : dlg.removeAttribute('open'); });   // click on the backdrop
-  $('btnSave').addEventListener('click', () => J.saveFile(baseName() + '.jizura.json', JSON.stringify(Object.assign({}, S.project, { appVersion: '1.5.2' }), null, 1)));
+  $('btnSave').addEventListener('click', () => J.saveFile(baseName() + '.jizura.json', JSON.stringify(Object.assign({}, S.project, { appVersion: '1.5.2-mcp.1' }), null, 1)));
   audioNameDefault = $('audioName').textContent;
   $('btnClearLyrics').addEventListener('click', clearLyrics);
   $('btnReset').addEventListener('click', () => {
@@ -41602,6 +42082,12 @@ J.ui = S;
 // Shared editor hooks used by the layer interface
 J.uiApi = { toast, replan, syncUI, syncOmakaseThemes, pause, seek, flushSave, loadAudioFile, restartPreview, exportRange, exportRangeLines, pushEdit, edGo,
   audioLike, cueRerollTarget,
+  importAgentProject(project) {
+    let next;
+    try { next = mergeProject(project); J.plan(next, audioLike()); }
+    catch (e) { J.registerProjectFonts(S.project.userFonts); J.activateCustomEffects(S.project); throw e; }
+    pause(); pushEdit(); S.project = next; fontKey = ''; syncUI(); replan(); flushSave();
+  },
   applyMotionProject(project, index, resume) {
     if (S.exporting) return;
     pushEdit(); remember(); S.project = project; fontKey = ''; syncUI(); replan(); commit(); flushSave();
@@ -43066,6 +43552,50 @@ function boot() {
   });
 }
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
+})();
+
+/* Human-facing controls for the same favorites used by the local MCP bridge. */
+(() => {
+'use strict';
+const tr=J.layerText,el=(tag,text)=>{const e=document.createElement(tag);if(text!=null)e.textContent=text;return e;};
+function boot(){
+  const S=J.ui,A=J.uiApi,clone=x=>JSON.parse(JSON.stringify(x));
+  const opener=el('button',tr('お気に入り演出…','Favorite effects…'));opener.id='btnAgentFavorites';opener.type='button';opener.className='small';
+  (document.getElementById('btnMotionLibrary')||document.getElementById('btnOmakase')).after(opener);
+  const fontBox=el('div');fontBox.className='agent-font-control';
+  const clean=el('input');clean.type='checkbox';clean.id='agentCleanTypography';
+  const cleanLabel=el('label',tr('文字だけ（基本の9レイアウト）','Text only (9 core layouts)'));cleanLabel.prepend(clean);
+  clean.addEventListener('change',()=>{const next=clone(S.project);next.agentCleanTypography=clean.checked;update(next);});
+  const label=el('label',tr('全編の書体を固定','One font for all lyrics')),fonts=el('select');fonts.id='agentUniformFont';fonts.setAttribute('aria-label',tr('全編の書体を固定','One font for all lyrics'));
+  const syncFont=()=>{fonts.replaceChildren();const off=el('option',tr('スタイル・役割ごとの書体','Use style font roles'));off.value='';fonts.append(off);for(const [key,f] of Object.entries(J.FONTS)){const o=el('option',f.label);o.value=key;fonts.append(o);}fonts.value=S.project.agentUniformFont||'';clean.checked=!!S.project.agentCleanTypography;};
+  const update=next=>{A.importAgentProject(next);syncFont();};
+  label.htmlFor=fonts.id;fontBox.append(cleanLabel,label,fonts);document.getElementById('layerPanel')?.prepend(fontBox);syncFont();
+  fonts.addEventListener('change',()=>{const next=clone(S.project);if(fonts.value)next.agentUniformFont=fonts.value;else delete next.agentUniformFont;update(next);});
+  let dialog,list,name,status,canvas,target=-1,epoch=0;
+  const message=(text,error=false)=>{status.textContent=text;status.classList.toggle('error',error);};
+  const selected=()=>S.project.effectFavorites?.find(f=>f.id===list.value);
+  function refresh(id){const value=id||list.value;list.replaceChildren();for(const f of S.project.effectFavorites||[]){const o=el('option',f.name);o.value=f.id;list.append(o);}if(value)list.value=value;if(list.selectedIndex<0&&list.options.length)list.selectedIndex=0;}
+  async function preview(){const f=selected();if(!f)return;const seq=++epoch;message(tr('試写中…','Rendering preview…'));try{const result=await J.agentFavorites.preview({project:S.project,id:f.id,time:.8,width:480});const image=new Image();image.src='data:image/png;base64,'+result.data;await image.decode();if(seq!==epoch||!dialog.open)return;canvas.width=result.width;canvas.height=result.height;canvas.getContext('2d').drawImage(image,0,0);message(tr('サンプル歌詞での試写。適用するまで現在の字幕は変わりません。','Sample preview. The current subtitle changes only when Apply is pressed.'));}catch(e){if(seq===epoch)message(e.message,true);}}
+  function mount(){if(dialog)return;dialog=el('dialog');dialog.id='agentFavoritesDialog';dialog.className='agent-favorites-dialog';
+    const heading=el('h2',tr('お気に入り演出','Favorite effects'));heading.id='agentFavoritesHeading';dialog.setAttribute('aria-labelledby',heading.id);
+    const hint=el('p',tr('現在のカットを保存し、別の歌詞に適用できます。AIが作った演出はJSONから取り込めます。字幕全体の構成には「モーションライブラリ」を使ってください。','Save the current cut or import AI-authored favorites as JSON. Use Motion library for whole-subtitle compositions.'));
+    list=el('select');list.size=6;list.id='agentFavoritesList';list.setAttribute('aria-label',tr('保存済み演出','Saved favorite effects'));list.addEventListener('change',()=>{name.value=selected()?.name||'';preview();});
+    name=el('input');name.id='agentFavoriteName';name.placeholder=tr('お気に入りの名前','Favorite name');name.setAttribute('aria-label',name.placeholder);name.maxLength=200;
+    canvas=el('canvas');canvas.width=480;canvas.height=270;canvas.className='agent-favorite-preview';status=el('p');status.setAttribute('role','status');
+    const actions=el('div');actions.className='agent-favorite-actions';
+    const button=(text,handler)=>{const b=el('button',text);b.type='button';b.addEventListener('click',async()=>{try{await handler();}catch(e){message(e.message,true);}});actions.append(b);return b;};
+    button(tr('現在のカットを保存','Save current cut'),()=>{if(target<0)throw Error(tr('先に字幕を読み込んでください。','Import subtitles first.'));const next=clone(S.project),f=J.agentFavorites.save(next,{name:name.value.trim()||tr('お気に入り','Favorite'),plan:S.plan,index:target});update(next);refresh(f.id);preview();});
+    button(tr('現在のカットへ適用','Apply to current cut'),()=>{const f=selected();if(!f)throw Error(tr('演出を選んでください。','Select a favorite.'));update(J.agentFavorites.apply(S.project,S.plan,target,f.id));message(tr('適用しました（Ctrl+Zで戻せます）。','Applied. Ctrl+Z restores the previous state.'));});
+    button(tr('選択した演出を削除','Delete selected favorite'),()=>{const f=selected();if(!f)return;const next=clone(S.project);J.agentFavorites.remove(next,f.id);update(next);refresh();message(tr('削除しました。','Deleted.'));});
+    button(tr('JSONを保存','Export JSON'),()=>J.saveFile('effects.jizura-layer-favorites.json',JSON.stringify(J.agentFavorites.export(S.project),null,2)));
+    const file=el('input');file.type='file';file.accept='.json';file.hidden=true;file.addEventListener('change',async()=>{try{if(!file.files[0])return;const next=J.agentFavorites.import(S.project,JSON.parse(await file.files[0].text()),'append');update(next);refresh();preview();}catch(e){message(e.message,true);}finally{file.value='';}});
+    button(tr('JSONを読み込む','Import JSON'),()=>file.click());button(tr('閉じる','Close'),()=>dialog.close());
+    dialog.append(heading,hint,list,name,actions,canvas,status,file);dialog.addEventListener('close',()=>{epoch++;});document.body.append(dialog);
+  }
+  opener.addEventListener('click',()=>{A.pause();mount();const cut=J.cutAt(S.plan,S.t);target=cut?.utext!=null?cut.index:S.plan.cuts.findIndex(c=>c.utext!=null);refresh();name.value=selected()?.name||'';dialog.showModal();message(tr('対象：現在のカット','Target: current cut'));preview();});
+  const sync=J.syncLayerUI;J.syncLayerUI=()=>{sync?.();syncFont();};
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
 })();
 
 /* Finish pointer-operated controls without stealing keyboard/text editing focus. */
