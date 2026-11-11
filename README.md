@@ -1,6 +1,9 @@
 # JIZURA Layer Studio
 
-**字幕レイヤー制作ツール · cityedge fork · v1.5.2**
+このフォークには、ローカルMCP・JSONによるお気に入り演出・全編の書体固定を追加しています。[MCPの設定と使い方](mcp/README.md) · [お気に入り演出](docs/AGENT_FAVORITES.md)
+
+
+**字幕レイヤー制作ツール · strelkaxx fork（cityedgeベース）· v1.5.2-mcp.1**
 
 「モーションライブラリ…」で、気に入った字幕の演出を保存し、別の歌詞で試写・適用できます。共通ライブラリのJSON持ち出しにも対応します。[使い方](user_guide.md#モーションライブラリ)
 

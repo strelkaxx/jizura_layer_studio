@@ -67,3 +67,32 @@ JIZURA Layer Studio is based on JIZURA v0.9.0 by hakoniwa:
 https://github.com/852wa/JIZURA
 The original MIT copyright and license are preserved in `LICENSE`, with a separate notice for cityedge's modifications.
 This edition provides Japanese and English interfaces. Other interface translations are not distributed.
+
+
+## hirazisora/JIZURA agent integration
+
+Source: https://github.com/hirazisora/JIZURA/tree/5874988dfcbaf93d15e355701841e954b51e9225
+
+The bounded drawing interpreter and custom lyric component registration are adapted in src/11za_agent_drawing.js and src/11zb_agent_components.js. The local MCP runtime is adapted from mcp/runtime.mjs. Other integration files target cityedge Layer Studio.
+
+MIT License
+
+Copyright (c) 2026 hakoniwa
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

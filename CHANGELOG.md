@@ -1,3 +1,10 @@
+## 1.5.2-mcp.1 — 2026-11-12 (strelkaxx fork)
+
+- Add a local stdio MCP adapter for cityedge Layer Studio: SRT, project/media imports, subtitle/cut editing, reproducible generation, PNG/audio previews and native MP4/front export.
+- Add lyric favorites, bounded JSON drawing programs and custom lyric components, adapted from hirazisora/JIZURA with MIT attribution. Favorites and native motion recipes have portable JSON exports.
+- Add native editor favorite controls and a common-font selector. New editor/MCP projects default to clean typography with nine stock layouts; custom authored components remain available. The original choices remain recoverable by disabling the policy.
+- Add SDK-to-Edge integration tests, native UI tests, H.264/AAC output checks and native engine regressions. Existing cityedge features and notices are retained.
+
 ## 1.5.2 — 2026-10-25
 
 - プレビューループの初期値をOFFに変更。OFF・全体・行・カットの選択をブラウザのlocalStorageに保存し、次回起動時に復元。プロジェクトJSONには含めず、プロジェクト初期化でも保持。日英マニュアル・利用ガイドを更新。

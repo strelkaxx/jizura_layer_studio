@@ -1,0 +1,4 @@
+mcp/node_modules/
+mcp/output/
+*.log
+__pycache__/
