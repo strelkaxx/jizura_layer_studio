@@ -1,0 +1,50 @@
+import {McpServer} from '@modelcontextprotocol/sdk/server/mcp.js';
+import {StdioServerTransport} from '@modelcontextprotocol/sdk/server/stdio.js';
+import {z} from 'zod';
+import {Runtime} from './runtime.mjs';
+const runtime=new Runtime(),server=new McpServer({name:'jizura-layer-studio',version:'0.1.0'});
+const session=z.string(),index=z.number().int().nonnegative();
+const plain=value=>({content:[{type:'text',text:JSON.stringify(value,null,2)}]});
+const failure=e=>({isError:true,content:[{type:'text',text:e.message}]});
+function tool(name,description,inputSchema,fn){server.registerTool(name,{description,inputSchema},async args=>{try{return plain(await fn(args));}catch(e){return failure(e);}});}
+function call(name,description,schema,method=name){tool(name,description,{session,...schema},a=>runtime.call(a.session,method,a));}
+function picture(name,description,schema,method){server.registerTool(name,{description,inputSchema:{session,...schema}},async a=>{try{const {data,...meta}=await runtime.call(a.session,method,a);return {content:[{type:'text',text:JSON.stringify(meta)},{type:'image',mimeType:'image/png',data}]};}catch(e){return failure(e);}});}
+const workflow='Create session, read catalog and state, import SRT and optional audio/background. Set fonts/effect pools, generate, inspect preview_frame images, then refine cues/cuts. Read favorite_spec and custom_effect_spec before authoring. Save/apply favorites or whole-cue motion recipes. Validate/import custom JSON and inspect entrance/hold/exit. Record quality_approve with current revision and real review notes before video export; this is an agent review record, not a request for user permission. Save project/settings/favorites/motions without review. Poll job_status to completion and save before session_close. Local only; no transcription. One background asset, not ONE STOP EDITION media timelines. Favorites are .jizura-layer-favorites.json, not binary .jizuraichifav. Cue indices differ from resolved cut indices; reacquire state after edits.';
+tool('session_create','Open an isolated local Layer Studio editor in headless Edge.',{},()=>runtime.create());
+tool('session_close','Close an isolated editor after saving.',{session},a=>runtime.closeSession(a.session));
+call('project_get','Read project and current resolved lyric cuts.',{offset:index.default(0),limit:z.number().int().min(1).max(200).default(50),includeProject:z.boolean().default(true)},'state');
+call('catalog','Read actual effect/font/theme IDs, defaults and supported formats.',{},'catalog');
+call('project_audit','Check technical consistency; does not judge artistic quality.',{},'audit');
+call('project_undo','Undo last MCP project mutation, excluding media imports.',{},'undo');
+call('project_edit','Edit existing JSON paths; unsafe keys/invalid inputs fail atomically.',{changes:z.array(z.object({path:z.array(z.union([z.string(),index])).min(1).max(16),value:z.unknown()})).min(1)},'edit');
+call('theme_set','Select a built-in/user theme for the next generation.',{theme:z.string()},'theme');
+call('generate','Generate with reproducible seed and SRT timings.',{seed:z.number().int()},'generate');
+call('font_set','Fix one catalog/installed font across all lyrics, including saved cuts and future generation.',{font:z.string()},'fontSet');
+call('cue_edit','Edit one SRT subtitle body/start/end; uses cue index.',{index,text:z.string().optional(),start:z.number().nonnegative().optional(),end:z.number().nonnegative().optional()},'cueEdit');
+call('cue_randomize','Reroll one native subtitle; uses cue index.',{index,mode:z.enum(['all','style','mood','motion','color','fine','font','global','random']).default('motion')},'cueRandomize');
+call('cut_update','Edit standard effect slots/parameters on one resolved cut, retaining its text/times.',{index,details:z.record(z.unknown())},'cutUpdate');
+tool('asset_import','Import an absolute local SRT/project/settings/audio/background/favorites/motions path. SRT is UTF-8; additional fonts use installed families.',{session,path:z.string(),kind:z.enum(['srt','project','settings','audio','background','favorites','motions']),mode:z.enum(['append','replace']).default('append')},a=>runtime.input(a.session,a));
+call('audio_analysis','Get beat times; these are not lyric onset detection.',{start:z.number().nonnegative().default(0),duration:z.number().positive().max(120).default(30)},'audioAnalysis');
+server.registerTool('audio_preview',{description:'Listen to an interval from the imported local audio as WAV.',inputSchema:{session,start:z.number().nonnegative().default(0),duration:z.number().positive().max(30).default(5)}},async a=>{try{const {data,...meta}=await runtime.call(a.session,'audioPreview',a);return {content:[{type:'text',text:JSON.stringify(meta)},{type:'audio',mimeType:'audio/wav',data}]};}catch(e){return failure(e);}});
+const view={time:z.number().nonnegative().default(1),width:z.number().int().min(160).max(1920).default(640)};
+picture('preview_frame','Render actual current lyric frame as PNG.',view,'preview');
+for(const [name,method] of [['favorite_spec','favoriteSpec'],['favorite_list','favoriteList'],['custom_effect_spec','customEffectSpec'],['custom_effect_list','customEffectList'],['motion_list','motionList']])call(name,'Read '+name+' for the current Layer Studio project.',{},method);
+call('favorite_validate','Validate lyric favorite JSON without editing.',{payload:z.record(z.unknown())},'favoriteValidate');
+call('favorite_save','Save an authored payload or capture the resolved cut at index.',{name:z.string().min(1).max(200),id:z.string().optional(),payload:z.record(z.unknown()).optional(),index:index.optional()},'favoriteSave');
+call('favorite_apply','Apply a named favorite to a resolved cut.',{id:z.string(),index},'favoriteApply');
+call('favorite_delete','Remove a project favorite.',{id:z.string()},'favoriteDelete');
+picture('favorite_preview','Preview a favorite/draft without editing. Omit index for sample lyrics.',{id:z.string().optional(),payload:z.record(z.unknown()).optional(),index:index.optional(),...view},'favoritePreview');
+call('custom_effect_validate','Validate standard-slot lyric component definitions.',{components:z.array(z.record(z.unknown())).max(128)},'customEffectValidate');
+call('custom_effect_import','Register validated project-owned lyric components.',{components:z.array(z.record(z.unknown())).max(128)},'customEffectImport');
+picture('custom_effect_preview','Render an imported component through the lyric pipeline.',{id:z.string(),index:index.optional(),...view},'customEffectPreview');
+call('motion_save','Capture a whole native subtitle recipe.',{index,name:z.string().min(1).max(200)},'motionSave');
+call('motion_apply','Adapt a saved motion to another subtitle.',{id:z.string(),index},'motionApply');
+call('quality_approve','Record agent review of current preview frames; edits invalidate it. No user permission prompt is implied.',{revision:z.number().int(),note:z.string().min(20).max(4000)},'approve');
+tool('export_start','Start asynchronous JSON/MP4 export; poll job_status. mp4 includes optional audio/background; front is silent lyric front. Never overwrites existing files.',{session,kind:z.enum(['project','settings','favorites','motions','mp4','front']),filename:z.string()},a=>runtime.export(a.session,a));
+tool('job_status','Get asynchronous export progress/path/error/metadata.',{job:z.string()},a=>{const j=runtime.jobs.get(a.job);if(!j)throw Error('Unknown job');return j;});
+tool('job_cancel','Cancel an active export.',{job:z.string()},a=>runtime.cancel(a.job));
+server.registerResource('workflow','jizura-layer://workflow',{mimeType:'text/plain'},async uri=>({contents:[{uri:uri.href,text:workflow}]}));
+server.registerPrompt('create-video',{description:'Layer Studio workflow'},()=>({messages:[{role:'user',content:{type:'text',text:workflow}}]}));
+let closing=false;async function close(){if(closing)return;closing=true;await runtime.close();process.exit(0);}
+process.on('SIGINT',close);process.on('SIGTERM',close);process.stdin.on('end',close);
+await runtime.start();await server.connect(new StdioServerTransport());

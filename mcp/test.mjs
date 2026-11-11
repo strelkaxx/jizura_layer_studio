@@ -1,0 +1,68 @@
+import assert from 'node:assert/strict';
+import {mkdtemp,writeFile,readFile} from 'node:fs/promises';
+import {execFileSync} from 'node:child_process';
+import path from 'node:path';import os from 'node:os';
+import {fileURLToPath} from 'node:url';
+import {Client} from '@modelcontextprotocol/sdk/client/index.js';
+import {StdioClientTransport} from '@modelcontextprotocol/sdk/client/stdio.js';
+const root=path.dirname(fileURLToPath(import.meta.url)),out=await mkdtemp(path.join(os.tmpdir(),'jizura-layer-mcp-'));
+const transport=new StdioClientTransport({command:process.execPath,args:[path.join(root,'server.mjs')],env:{...process.env,JIZURA_OUTPUT_DIR:out,JIZURA_OFFLINE:'1'},stderr:'pipe'});
+let logs='';transport.stderr?.on('data',b=>{logs+=b.toString();});
+const client=new Client({name:'layer-studio-integration-test',version:'1'});
+const raw=(name,args={})=>client.callTool({name,arguments:args},undefined,{timeout:120000});
+const json=r=>JSON.parse(r.content[0].text);
+const call=async(name,args={})=>{const r=await raw(name,args);assert.ok(!r.isError,name+': '+JSON.stringify(r));return json(r);};
+const picture=async(name,args)=>{const r=await raw(name,args);assert.ok(!r.isError,name+': '+JSON.stringify(r));assert.equal(r.content[1].type,'image');return r.content[1].data;};
+async function exportFile(session,kind,filename){const job=await call('export_start',{session,kind,filename});for(let i=0;i<300;i++){const j=await call('job_status',{job:job.id});if(j.status!=='running'){assert.equal(j.status,'completed',JSON.stringify(j));return j;}await new Promise(r=>setTimeout(r,100));}throw Error('Export timed out');}
+try{
+ await client.connect(transport);const listed=await client.listTools();assert.ok(listed.tools.some(t=>t.name==='favorite_preview'));
+ const {session}=await call('session_create');const s={session};
+ const srt=path.join(out,'cues.srt');await writeFile(srt,'1\n00:00:00,100 --> 00:00:03,000\n朝の光が輝く\n\n2\n00:00:03,500 --> 00:00:06,500\n夜の星が輝く\n');
+ await call('asset_import',{...s,kind:'srt',path:srt});let state=await call('project_get',s);
+ assert.equal(state.project.subtitleCues[0].end,3);assert.equal(state.project.subtitleCues[1].start,3.5);
+ await call('font_set',{...s,font:'gothic_bold'});await call('generate',{...s,seed:123});
+ const catalog=await call('catalog',s);assert.ok(catalog.groups.layout.length>100);
+ const invalid=await raw('project_edit',{...s,changes:[{path:['__proto__','polluted'],value:1}]});assert.equal(invalid.isError,true);
+ await call('cue_edit',{...s,index:1,text:'朝の光が輝く'});
+ const motion=await call('motion_save',{...s,index:0,name:'native motion'});await call('motion_apply',{...s,id:motion.id,index:1});
+ const payload={format:'jizura-cut-effects',version:1,kind:'lyrics',native:{},details:{drawing:{version:1,mode:'replace',nodes:[{type:'text',text:'$text',x:{from:.2,to:.8},y:.5,size:.14,fill:'fg'}]}}};
+ const bad=structuredClone(payload);bad.details.drawing.nodes[0].x='fetch("https://example.com")';assert.equal((await raw('favorite_validate',{...s,payload:bad})).isError,true);
+ const {favorite}=await call('favorite_save',{...s,name:'Agent slide',payload});
+ const before=await call('project_get',s);
+ const first=await picture('favorite_preview',{...s,id:favorite.id,time:.3,width:320});
+ const second=await picture('favorite_preview',{...s,id:favorite.id,time:1.3,width:320});assert.notEqual(first,second);
+ assert.deepEqual(await call('project_get',s),before,'Favorite preview is read-only');await writeFile(path.join(out,'favorite-preview.png'),Buffer.from(first,'base64'));
+ await call('favorite_apply',{...s,id:favorite.id,index:0});state=await call('project_get',s);assert.ok(state.cuts[0].drawing);
+ const component={version:1,id:'custom_word_slide',group:'layout',name:'Agent text',tags:['graphic'],program:{version:1,mode:'replace',nodes:[{type:'text',text:'$text',x:.5,y:.5,size:.2,fill:'fg',scale:{from:.8,to:1.1}}]}};
+ await call('custom_effect_import',{...s,components:[component]});await picture('custom_effect_preview',{...s,id:component.id,time:.5,width:320});
+ await call('favorite_save',{...s,name:'Custom words',payload:{format:'jizura-cut-effects',version:1,kind:'lyrics',native:{},details:{layout:component.id,enter:'cut',exit:'cut'},components:[component]}});
+ const f=await exportFile(session,'favorites','library.json');assert.ok(f.path.endsWith('.jizura-layer-favorites.json'));
+ const {session:other}=await call('session_create');await call('asset_import',{session:other,kind:'favorites',path:f.path,mode:'replace'});
+ assert.equal((await call('favorite_list',{session:other})).length,2);await call('session_close',{session:other});
+ const project=await exportFile(session,'project','project.json');const saved=JSON.parse(await readFile(project.path,'utf8'));assert.ok(saved.agentEffects);assert.equal(saved.effectFavorites.length,2);
+ const mo=await exportFile(session,'motions','motions.json');assert.equal(JSON.parse(await readFile(mo.path,'utf8')).items.length,1);
+ const rejected=await raw('export_start',{...s,kind:'project',filename:'../escape'});assert.equal(rejected.isError,true);
+ await call('project_edit',{...s,changes:[{path:['res'],value:480},{path:['fps'],value:15},{path:['simpleExport','duration'],value:.8}]});
+ await picture('preview_frame',{...s,time:.2,width:320});state=await call('project_get',s);
+ await call('quality_approve',{...s,revision:state.revision,note:'Integration test inspected the current real raster at 0.2 seconds; this checks rendering, not artistic quality.'});
+
+ // PCM WAV fixture, then verify the actual exported AAC stream with ffprobe.
+ const rate=16000,frames=rate*2,wav=Buffer.alloc(44+frames*2);
+ wav.write('RIFF');wav.writeUInt32LE(36+frames*2,4);wav.write('WAVEfmt ',8);wav.writeUInt32LE(16,16);wav.writeUInt16LE(1,20);wav.writeUInt16LE(1,22);wav.writeUInt32LE(rate,24);wav.writeUInt32LE(rate*2,28);wav.writeUInt16LE(2,32);wav.writeUInt16LE(16,34);wav.write('data',36);wav.writeUInt32LE(frames*2,40);
+ for(let i=0;i<frames;i++)wav.writeInt16LE(Math.round(Math.sin(i/rate*Math.PI*880)*8000),44+i*2);
+ const audioFile=path.join(out,'audio.wav');await writeFile(audioFile,wav);await call('asset_import',{...s,kind:'audio',path:audioFile});
+ const audio=await raw('audio_preview',{...s,start:0,duration:.5});assert.equal(audio.content[1].type,'audio');
+ const bg=path.join(out,'background.svg');await writeFile(bg,'<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64"><rect width="64" height="64" fill="#3264aa"/></svg>');
+ const noBackground=await picture('preview_frame',{...s,time:.2,width:320});
+ await call('asset_import',{...s,kind:'background',path:bg});
+ await call('project_edit',{...s,changes:[{path:['simpleExport','duration'],value:.8}]});
+ const withBackground=await picture('preview_frame',{...s,time:.2,width:320});assert.notEqual(noBackground,withBackground,'Composite preview contains the imported background');
+ await writeFile(path.join(out,'composite-preview.png'),Buffer.from(withBackground,'base64'));
+ state=await call('project_get',s);await call('quality_approve',{...s,revision:state.revision,note:'Integration test inspected the composite frame with the imported background and generated audio fixture.'});
+ const video=await exportFile(session,'mp4','test.mp4');assert.equal(video.metadata.audio,true);
+ const probe=JSON.parse(execFileSync('ffprobe',['-v','error','-show_streams','-of','json',video.path],{encoding:'utf8'}));assert.ok(probe.streams.some(s=>s.codec_name==='aac'));assert.ok(probe.streams.some(s=>s.codec_name==='h264'));
+assert.ok((await readFile(video.path)).length>1000);
+ const front=await exportFile(session,'front','front.mp4');assert.ok((await readFile(front.path)).length>1000);
+ const duplicate=await raw('export_start',{...s,kind:'project',filename:'project.json'});assert.equal(duplicate.isError,true);
+ await call('session_close',s);console.log('PASS: MCP stdio → Edge → native SRT, font policy, edits, motions, custom effects, read-only PNG previews, favorite/project JSON round trips, MP4/front exports and path guards.\nArtifacts: '+out);
+} catch(e){console.error(logs);throw e;} finally{await client.close();await transport.close();}
