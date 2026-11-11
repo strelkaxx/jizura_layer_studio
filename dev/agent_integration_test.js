@@ -4,6 +4,33 @@ vm.createContext(context);for(const file of fs.readdirSync(path.join(__dirname,'
 const J=context.window.J,clone=x=>JSON.parse(JSON.stringify(x));
 function fixture(){const p=J.defaultProject();p.subtitleCues=[{id:'first',start:0,end:3,text:'朝の光が輝く'},{id:'filler',start:3,end:5,text:'間奏',filler:true},{id:'last',start:5,end:8,text:'夜の星が輝く'}];p.lyrics=p.subtitleCues.map(c=>c.text).join('\n\n');return p;}
 const payload={format:'jizura-cut-effects',version:1,kind:'lyrics',native:{},details:{layout:'center',enter:'cut',exit:'cut',decor:[],drawing:{version:1,mode:'replace',nodes:[{type:'text',text:'$text',x:.5,y:.5,size:.2,fill:'fg'}]}}};
+
+test('all 855 upstream extra2 parts register and obey both inclusion switches',()=>{
+ const expected={layout:180,enter:126,hold:50,exit:112,decor:130,treat:60,bg:64,cam:35,fx:69,trans:29};
+ for(const [g,count] of Object.entries(expected)){
+  const ids=J.order(g).filter(k=>J.registry(g)[k].x2);assert.equal(ids.length,count,g);
+  for(const id of ids){const d=J.registry(g)[id],p={extra:true,extra2:true,typo:true,kinetic:true,horror:true,wa:true};
+   assert.ok(J.randomOk(p,g,id),g+'.'+id);assert.equal(J.randomOk({...p,extra2:false},g,id),false);
+   if(d.set!=='extra2')assert.equal(J.randomOk({...p,[d.set]:false},g,id),false);
+   if(d.wa)assert.equal(J.randomOk({...p,wa:false},g,id),false);
+  }
+ }
+ const p=fixture();assert.equal(J.setOn(p,'extra2'),false);const base=J.localLookContext(p);
+ p.extra2=true;assert.notEqual(J.localLookContext(p),base);assert.equal(J.cueAppearanceRule(p,J.resolveStyle(p)).extra2,true);
+ assert.equal(J.themeDrawSwitches(p).extra2,true);
+ p.agentCleanTypography=true;p.overrides={0:{layout:J.order('layout').find(k=>J.LAYOUTS[k].x2)}};
+ assert.ok(J.plan(p).cuts.every(c=>J.agentTypographyAllowed('layout',c.layout)));
+});
+
+test('extra2 participates in auto-compose and old projects exclude it',()=>{
+ const hasNew=plan=>plan.cuts.some(c=>['layout','enter','hold','exit','treat','bg','cam','trans'].some(g=>c[g]&&J.registry(g)[c[g]]?.x2)||(c.decor||[]).some(d=>J.DECOR[d.id]?.x2))||plan.events.some(e=>J.FXE[e.type]?.x2);
+ let selected=false;
+ for(let seed=1;seed<=8;seed++)for(const extra2 of [false,true]){
+  const p=Object.assign(fixture(),{extra:true,extra2,horror:true,wa:true});Object.assign(p,J.omakase(p,J.rng(seed)));const plan=J.plan(p);
+  if(extra2)selected ||= hasNew(plan);else assert.equal(hasNew(plan),false);
+ }
+ assert.ok(selected,'auto-compose chooses the new parts');
+});
 test('favorite changes the intended cue through filler subplans and retains source data',()=>{
  const p=fixture(),plan=J.plan(p),index=plan.cuts.findIndex(c=>c.line===2);const before=JSON.stringify(p),next=J.applyAgentFavorite(p,plan,index,payload),out=J.plan(next);
  assert.equal(JSON.stringify(p),before);assert.ok(out.cuts.filter(c=>c.line===2).some(c=>c.drawing));assert.ok(out.cuts.filter(c=>c.line!==2).every(c=>!c.drawing));
