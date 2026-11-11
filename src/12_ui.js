@@ -214,6 +214,8 @@ function initVolume() {
 function mergeProject(p) {
   const d = J.defaultProject();
   const o = Object.assign(d, p || {});
+  if(o.agentCleanTypography===undefined)o.agentCleanTypography=true;
+  if(o.agentUniformFont===undefined)o.agentUniformFont='gothic_bold';
   if (o.subtitleCues) o.subtitleCues = J.validateCues(o.subtitleCues);
   o.fx = Object.assign(J.defaultProject().fx, (p && p.fx) || {});
   J.upgradeLayerProject(o, p);
@@ -816,7 +818,7 @@ function fillCutPick() {
 function renderLines() {
   const ol = $('lineList'); ol.innerHTML = ''; S.lineEls = []; S.curLine = -2;
   const ov = S.project.overrides, R = exportRangeLines();
-  const layoutOpts = '<option value="">自動</option>' + J.LAYOUT_ORDER.map(k => `<option value="${k}">${J.LAYOUTS[k].name}</option>`).join('');
+  const layoutOpts = '<option value="">自動</option>' + J.LAYOUT_ORDER.filter(k=>!S.project.agentCleanTypography||J.agentTypographyAllowed('layout',k)).map(k => `<option value="${k}">${J.LAYOUTS[k].name}</option>`).join('');
   // Hundreds of menus otherwise duplicate the complete layout catalogue on every replan.
   const lazyLay = (sel, value) => {
     sel.innerHTML = '<option value="">自動</option>' + (value && J.LAYOUTS[value] ? `<option value="${value}">${J.LAYOUTS[value].name}</option>` : '');
@@ -1422,7 +1424,7 @@ function renderFx() {
 /* ---------------- technique tab ---------------- */
 const GROUPS = [['layout', 'レイアウト'], ['enter', '登場'], ['hold', '保持'], ['exit', '退場'], ['decor', '装飾'], ['treat', '文字の加工'], ['bg', '背景'], ['cam', 'カメラ'], ['fx', '画面効果'], ['trans', 'カット間のつなぎ']];
 const openGroups = new Set();
-function techItems(g) { return J.order(g).filter(k => J.registry(g)[k] && !J.registry(g)[k].special); }
+function techItems(g) { return J.order(g).filter(k => J.registry(g)[k] && !J.registry(g)[k].special && (!S.project.agentCleanTypography || J.agentTypographyAllowed(g,k))); }
 
 const previewR = new J.Renderer();
 const previewPlans = new Map();
@@ -2109,6 +2111,12 @@ J.ui = S;
 // Shared editor hooks used by the layer interface
 J.uiApi = { toast, replan, syncUI, syncOmakaseThemes, pause, seek, flushSave, loadAudioFile, restartPreview, exportRange, exportRangeLines, pushEdit, edGo,
   audioLike, cueRerollTarget,
+  importAgentProject(project) {
+    let next;
+    try { next = mergeProject(project); J.plan(next, audioLike()); }
+    catch (e) { J.registerProjectFonts(S.project.userFonts); J.activateCustomEffects(S.project); throw e; }
+    pause(); pushEdit(); S.project = next; fontKey = ''; syncUI(); replan(); flushSave();
+  },
   applyMotionProject(project, index, resume) {
     if (S.exporting) return;
     pushEdit(); remember(); S.project = project; fontKey = ''; syncUI(); replan(); commit(); flushSave();
