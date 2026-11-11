@@ -17,6 +17,7 @@ def body(source, lang, version):
     heading = '利用について' if ja else 'About / rights'
     intro = ('本アプリは、hakoniwa氏の「JIZURA」を基に、cityedgeが字幕レイヤー制作向けに改変した非公式派生版です。原版の作者が本派生版の開発・保守を担当するものではありません。' if ja else
              'This is an unofficial derivative of JIZURA by hakoniwa, adapted by cityedge for subtitle layer production. The original author does not maintain this edition.')
+    intro = ('このフォークは、strelkaxxがcityedge版にローカルMCP・お気に入り演出・書体固定を追加したものです。' if ja else 'This fork adds local MCP, favorite effects and a common lyric font to the cityedge edition, maintained by strelkaxx. ') + intro
     rights = ('出力動画を利用するために、本アプリのMITライセンス表示を動画へ付ける必要はありません。歌詞・音楽・画像・動画・フォントなど、使用する素材の権利と利用条件は個別に確認してください。' if ja else
               'You do not need to place this app’s MIT license notice in exported videos. Check the rights and terms of the lyrics, music, images, videos, fonts and other material you use.')
     privacy = ('選択した素材はブラウザ内で処理し、アプリからサーバーへ送信しません。設定と字幕はブラウザの保存領域に自動保存します。フォント取得時にはGoogle Fontsへ接続します。素材ファイルはプロジェクトJSONに含みません。' if ja else

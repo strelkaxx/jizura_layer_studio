@@ -630,3 +630,11 @@ dialog.motion-library { box-sizing: border-box; width: min(980px, calc(100vw - 2
 @media (max-width: 650px) { .motion-library-grid { grid-template-columns: minmax(0, 1fr); } dialog.motion-library { padding: 12px; } }
 #app.is-mobile .transport { flex-wrap: wrap; }
 #app.is-mobile #btnMotionLibrary { flex: 0 0 100%; }
+
+/* Agent favorites share their project data with the local MCP integration. */
+.agent-font-control { display:grid; gap:6px; margin-bottom:14px; }
+.agent-favorites-dialog { width:min(720px,94vw); max-height:90vh; overflow:auto; color:var(--fg,#eee); background:var(--panel,#202024); border:1px solid #555; border-radius:12px; padding:20px; }
+.agent-favorites-dialog::backdrop { background:#0009; }
+.agent-favorites-dialog select,.agent-favorites-dialog input { width:100%; margin:6px 0; }
+.agent-favorite-actions { display:flex; gap:8px; flex-wrap:wrap; margin:12px 0; }
+.agent-favorite-preview { width:100%; height:auto; background:#000; }
