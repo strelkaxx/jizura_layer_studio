@@ -57,3 +57,7 @@ The bounded JSON interpreter and component registration are adapted from [hirazi
 ## Test
 
 From the repository root, run `node mcp/test.mjs`. This uses the real SDK stdio client, isolated Edge, native engine, PNG previews, favorite JSON transfer, SRT import, custom layouts, fonts, native motion recipes, local WAV/background fixtures and both composite/front MP4 exports. It checks the H.264/AAC streams with `ffprobe` (test dependency only). Artifacts use a fresh OS temporary directory. The usual `dev/*test.js` suite remains available. No user project is used by the tests.
+
+## Upstream extra parts 2
+
+All 855 browser parts from 852wa/JIZURA v0.13.0 are included. Use `project_edit` to set `extra2=true` and `agentCleanTypography=false` to allow them. Horror, typo, kinetic and wa switches still apply to their respective sets. `catalog` exposes `extra2` and `set` metadata for every part. The common font policy remains independent. No After Effects panel is included in Layer Studio.

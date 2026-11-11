@@ -17,7 +17,7 @@ function mutate(fn){const draft=clone(S.project);fn(draft);return replace(draft)
 const getCut=index=>J.agentCutTarget(S.plan,index).cut;
 function validateCues(p){if(p.subtitleCues)p.subtitleCues=J.validateCues(p.subtitleCues);}
 function catalog(){J.activateCustomEffects(S.project);return {engine:'cityedge-layer-studio',defaults:J.defaultProject(),themes:clone(J.THEMES),
-  groups:Object.fromEntries(J.GROUP_KEYS.map(g=>[g,J.order(g).map(id=>({id,name:J.registry(g)[id].name,custom:!!J.registry(g)[id].custom}))])),
+  groups:Object.fromEntries(J.GROUP_KEYS.map(g=>[g,J.order(g).map(id=>({id,name:J.registry(g)[id].name,custom:!!J.registry(g)[id].custom,set:J.setOf(g,id),extra2:!!J.registry(g)[id].x2}))])),
   fonts:Object.fromEntries(Object.entries(J.FONTS).map(([key,f])=>[key,{label:f.label,weight:f.weight}])),favorite:J.agentFavorites.spec(),
   limitations:['Lyric cuts use resolved zero-based cut indices; cue_edit/cue_randomize use subtitle indices.',
     'No foreground/background media timelines from ONE STOP EDITION; use the single Layer Studio background asset.',
